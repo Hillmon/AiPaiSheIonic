@@ -1,4 +1,4 @@
-# The Ionic Super Starter 🎮
+# Aipaishe Ionic Super Starter
 
 _Note: the Ionic Super Starter requires Ionic CLI 3._
 
