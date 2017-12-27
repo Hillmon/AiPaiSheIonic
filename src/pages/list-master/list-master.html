@@ -14,22 +14,50 @@
 
 <ion-content>
 
-  <ion-list>
-    <ion-item-sliding *ngFor="let item of currentItems">
-      <button ion-item (click)="openItem(item)">
-        <ion-avatar item-start>
-          <img [src]="item.profilePic" />
-        </ion-avatar>
-        <h2>{{item.name}}</h2>
-        <p>{{item.about}}</p>
-        <ion-note item-end *ngIf="item.note">{{item.note}}</ion-note>
-      </button>
+  <ion-card *ngFor="let item of currentItems">
+    <img [src]="item.profilePic" (click)="openItem(item)"/>
+    <ion-card-content>
+      <ion-card-title>
+        {{item.name}}
+      </ion-card-title>
+      <p>
+        {{item.about}}
+      </p>
+    </ion-card-content>
 
-      <ion-item-options>
-        <button ion-button color="danger" (click)="deleteItem(item)">
-          {{ 'DELETE_BUTTON' | translate }}
+    <ion-row no-padding>
+      <ion-col>
+        <button ion-button clear small color="danger" icon-start>
+          <ion-icon name='star'></ion-icon>
+          Like
         </button>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
+      </ion-col>
+      <ion-col text-right>
+        <button ion-button clear small color="danger" icon-start>
+          <ion-icon name='share-alt'></ion-icon>
+          Share
+        </button>
+      </ion-col>
+    </ion-row>
+
+  </ion-card>
+
+  <!--<ion-list>-->
+    <!--<ion-item-sliding *ngFor="let item of currentItems">-->
+      <!--<button ion-item (click)="openItem(item)">-->
+        <!--<ion-avatar item-start>-->
+          <!--<img [src]="item.profilePic" />-->
+        <!--</ion-avatar>-->
+        <!--<h2>{{item.name}}</h2>-->
+        <!--<p>{{item.about}}</p>-->
+        <!--<ion-note item-end *ngIf="item.note">{{item.note}}</ion-note>-->
+      <!--</button>-->
+
+      <!--<ion-item-options>-->
+        <!--<button ion-button color="danger" (click)="deleteItem(item)">-->
+          <!--{{ 'DELETE_BUTTON' | translate }}-->
+        <!--</button>-->
+      <!--</ion-item-options>-->
+    <!--</ion-item-sliding>-->
+  <!--</ion-list>-->
 </ion-content>
