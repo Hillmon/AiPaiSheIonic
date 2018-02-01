@@ -1,6 +1,6 @@
 <ion-content scroll="false">
   <video preload="auto" loop="loop" id="pretzel-video" class="video-playing" autoplay="" style="
-    height: 70%;">
+    height: 50%;">
     <source src="https://a0.muscache.com/airbnb/static/P1-background-vid-compressed-2.mp4" type="video/mp4">
     <source src="https://a0.muscache.com/airbnb/static/P1-background-vid-compressed-2.webm" type="video/webm">
   </video>
@@ -10,8 +10,10 @@
       {{ 'WELCOME_INTRO' | translate }}
     </div>
   </div>
-  <div padding>
-    <button ion-button block (click)="signup()">{{ 'SIGNUP' | translate }}</button>
-    <button ion-button block (click)="login()" class="login">{{ 'LOGIN' | translate }}</button>
+  <div padding style="height: 30%" text-center>
+    <ion-input style="width: 70%;display: inline-block;border-bottom-width: 0.55px;border-bottom-style: solid;border-bottom-color: rgb(200, 199, 204)" placeholder="Email" type="text" name="email"></ion-input>
+    <ion-input style="width: 70%;display: inline-block;border-bottom-width: 0.55px;border-bottom-style: solid;border-bottom-color: rgb(200, 199, 204)" placeholder="Password" type="password" name="password"></ion-input>
+    <button style="width: 70%;display: inline-block" ion-button block (click)="login()">{{ 'Login' | translate }}</button>
+    <button style="width: 70%;display: inline-block;background-color: white;margin-top: 1em" (click)="signup()">{{ 'Create New Account' | translate }}</button>
   </div>
 </ion-content>
