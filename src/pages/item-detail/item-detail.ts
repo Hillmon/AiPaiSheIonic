@@ -12,11 +12,9 @@ import { Items } from '../../providers/providers';
 })
 export class ItemDetailPage {
   item: any;
-  loadingCtrl: any;
 
-  constructor(public navCtrl: NavController, navParams: NavParams, items: Items, loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, navParams: NavParams, items: Items, private loadingCtrl: LoadingController) {
     this.item = navParams.get('item') || items.defaultItem;
-    this.loadingCtrl = loadingCtrl;
   }
 
   joinEvent() {
