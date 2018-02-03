@@ -9,6 +9,21 @@
 
 <ion-content>
   <ion-searchbar (ionInput)="getItems($event)" placeholder="{{ 'SEARCH_PLACEHOLDER' | translate }}"></ion-searchbar>
+
+  <div padding>
+    <ion-segment [(ngModel)]="eventtype">
+      <ion-segment-button value="all" (ionSelect)="selectedType()">
+        All
+      </ion-segment-button>
+      <ion-segment-button value="yoga" (ionSelect)="selectedType()">
+        Yoga
+      </ion-segment-button>
+      <ion-segment-button value="running" (ionSelect)="selectedType()">
+        Running
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
   <ion-list>
     <button ion-item (click)="openItem(item)" *ngFor="let item of currentItems">
       <ion-avatar item-start>

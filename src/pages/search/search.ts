@@ -12,6 +12,7 @@ import { Items } from '../../providers/providers';
 export class SearchPage {
 
   currentItems: any = [];
+  eventtype: string = 'all';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public items: Items) { }
 
@@ -35,6 +36,15 @@ export class SearchPage {
   openItem(item: Item) {
     this.navCtrl.push('ItemDetailPage', {
       item: item
+    });
+  }
+
+  selectedType() {
+    if (this.eventtype == 'all') {
+      return;
+    }
+    this.currentItems = this.items.query({
+      type: this.eventtype
     });
   }
 
