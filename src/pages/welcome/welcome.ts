@@ -17,10 +17,22 @@ import { Observable } from 'rxjs/Observable';
 export class WelcomePage {
   films: Observable<any>;
 
+  // testing HTTP only
+  users: Observable<any>;
+
   constructor(public navCtrl: NavController, public httpClient: HttpClient) { }
 
   login() {
+    //TODO: need to re-use the existing login RESTful API
     // this.navCtrl.push('LoginPage');
+
+    // testing with aipaishe cloud VM (OK!)
+    this.users = this.httpClient.get('http://35.185.217.124:8080/get-all-user-json');
+    this.users
+      .subscribe(data => {
+        console.log('user data: ', data);
+      })
+
     this.films = this.httpClient.get('https://swapi.co/api/films');
     this.films
       .subscribe(data => {
@@ -29,6 +41,7 @@ export class WelcomePage {
   }
 
   signup() {
+    //TODO: need to re-use the existing signup RESTful API
     this.navCtrl.push('SignupPage');
   }
 }
