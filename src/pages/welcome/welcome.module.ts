@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { IonicPageModule } from 'ionic-angular';
+import { HttpClientModule } from '@angular/common/http';
 
 import { WelcomePage } from './welcome';
 
@@ -10,7 +11,8 @@ import { WelcomePage } from './welcome';
   ],
   imports: [
     IonicPageModule.forChild(WelcomePage),
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    HttpClientModule,
   ],
   exports: [
     WelcomePage

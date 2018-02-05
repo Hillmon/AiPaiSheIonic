@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "4.4.3",
     "@ionic-native/camera": "4.3.1",
     "@ionic-native/core": "4.3.0",
+    "@ionic-native/http": "^4.5.3",
     "@ionic-native/splash-screen": "4.3.0",
     "@ionic-native/status-bar": "4.3.0",
     "@ionic/storage": "2.0.1",
@@ -29,6 +30,7 @@
     "@ngx-translate/http-loader": "^2.0.0",
     "cordova-android": "^7.0.0",
     "cordova-ios": "^4.5.4",
+    "cordova-plugin-advanced-http": "^1.9.1",
     "cordova-plugin-device": "^1.1.4",
     "cordova-plugin-ionic-webview": "^1.1.16",
     "cordova-plugin-splashscreen": "^4.0.3",
@@ -51,7 +53,8 @@
       "cordova-plugin-whitelist": {},
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
-      "cordova-plugin-ionic-webview": {}
+      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-advanced-http": {}
     },
     "platforms": [
       "ios",
