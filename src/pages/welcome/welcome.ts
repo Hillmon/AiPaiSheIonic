@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import {AlertController, IonicPage, LoadingController, NavController} from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { MainPage } from '../pages';
@@ -19,8 +19,7 @@ export class WelcomePage {
   users: Observable<any>;
   email=null;
   password=null;
-
-  constructor(public navCtrl: NavController, public httpClient: HttpClient) { }
+  constructor(public navCtrl: NavController, public httpClient: HttpClient, public loadingCtrl: LoadingController, public alertCtrl: AlertController) { }
 
   login() {
     //TODO: need to re-use the existing login RESTful API
@@ -32,13 +31,20 @@ export class WelcomePage {
 
     console.log("login email:"+this.email);
     console.log("login pwd:"+this.password);
+    let loading = this.loadingCtrl.create();
+    loading.present();
+    let alert = this.alertCtrl.create({title: 'Login Failed',
+      subTitle: 'Please check and try again',
+      buttons: ['Dismiss']});
     this.users = this.httpClient.post('http://35.185.217.124:8080/user/login', loginBody);
     this.users
       .subscribe(data => {
         console.log('login result: ', data);
-      });
-
-    this.navCtrl.push(MainPage);
+        loading.dismissAll();
+        this.navCtrl.push(MainPage);
+      },
+        err =>{ console.warn("login error: "+err); loading.dismissAll();alert.present()},
+        ()=>loading.dismissAll());
   }
 
   signup() {
