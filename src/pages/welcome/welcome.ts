@@ -26,9 +26,6 @@ export class WelcomePage {
     // this.navCtrl.push('LoginPage');
 
     // testing with aipaishe cloud VM (OK!)
-
-    const loginBody = {email: this.email, password:this.password};
-
     console.log("login email:"+this.email);
     console.log("login pwd:"+this.password);
     let loading = this.loadingCtrl.create();
