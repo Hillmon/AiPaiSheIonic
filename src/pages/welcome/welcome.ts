@@ -36,15 +36,14 @@ export class WelcomePage {
     let alert = this.alertCtrl.create({title: 'Login Failed',
       subTitle: 'Please check and try again',
       buttons: ['Dismiss']});
-    this.users = this.httpClient.post('http://35.185.217.124:8080/user/login', loginBody);
+    this.users = this.httpClient.get('http://35.185.217.124:8080/user/login?email='+this.email+'&password='+this.password);
     this.users
       .subscribe(data => {
         console.log('login result: ', data);
         loading.dismissAll();
         this.navCtrl.push(MainPage);
       },
-        err =>{ console.warn("login error: "+err); loading.dismissAll();alert.present()},
-        ()=>loading.dismissAll());
+        err =>{ console.warn("login error: "+err); loading.dismissAll();alert.present()});
   }
 
   signup() {
