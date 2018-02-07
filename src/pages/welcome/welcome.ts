@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-
+import { MainPage } from '../pages';
 /**
  * The Welcome Page is a splash page that quickly describes the app,
  * and then directs the user to create an account or log in.
@@ -15,9 +15,7 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: 'welcome.html'
 })
 export class WelcomePage {
-  films: Observable<any>;
-
-  // testing HTTP only
+// testing HTTP onlyn
   users: Observable<any>;
 
   constructor(public navCtrl: NavController, public httpClient: HttpClient) { }
@@ -31,13 +29,9 @@ export class WelcomePage {
     this.users
       .subscribe(data => {
         console.log('user data: ', data);
-      })
+      });
 
-    this.films = this.httpClient.get('https://swapi.co/api/films');
-    this.films
-      .subscribe(data => {
-        console.log('my data: ', data);
-      })
+    this.navCtrl.push(MainPage);
   }
 
   signup() {
