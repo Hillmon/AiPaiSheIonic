@@ -17,6 +17,8 @@ import { MainPage } from '../pages';
 export class WelcomePage {
 // testing HTTP onlyn
   users: Observable<any>;
+  email=null;
+  password=null;
 
   constructor(public navCtrl: NavController, public httpClient: HttpClient) { }
 
@@ -25,10 +27,15 @@ export class WelcomePage {
     // this.navCtrl.push('LoginPage');
 
     // testing with aipaishe cloud VM (OK!)
-    this.users = this.httpClient.get('http://35.185.217.124:8080/get-all-user-json');
+
+    const loginBody = {email: this.email, password:this.password};
+
+    console.log("login email:"+this.email);
+    console.log("login pwd:"+this.password);
+    this.users = this.httpClient.post('http://35.185.217.124:8080/user/login', loginBody);
     this.users
       .subscribe(data => {
-        console.log('user data: ', data);
+        console.log('login result: ', data);
       });
 
     this.navCtrl.push(MainPage);
