@@ -48,13 +48,14 @@ export class SignupPage {
     console.log("signup pwd:"+this.account);
     let loading = this.loadingCtrl.create();
     loading.present();
-    let alert = this.alertCtrl.create({title: 'Login Failed',
+
+    let alert = this.alertCtrl.create({title: 'Signup Failed',
       subTitle: 'Please check and try again',
       buttons: ['Dismiss']});
     this.users = this.httpClient.post('http://35.185.217.124:8080/user/registration', this.account);
     this.users
       .subscribe(data => {
-          console.log('login result: ', data);
+          console.log('Signup result: ', data);
 
           let notification = this.alertCtrl.create({title: 'Signup Successfully!',
             subTitle: 'Please active the account by confirming the link in your email',
@@ -69,22 +70,6 @@ export class SignupPage {
 
           notification.present();
         },
-        err =>{ console.warn("login error: "+err); loading.dismissAll();alert.present()});
-
-    // Attempt to login in through our User service
-    // this.user.signup(this.account).subscribe((resp) => {
-    //   this.navCtrl.push(MainPage);
-    // }, (err) => {
-    //
-    //   this.navCtrl.push(MainPage);
-    //
-    //   Unable to sign up
-      // let toast = this.toastCtrl.create({
-      //   message: this.signupErrorString,
-      //   duration: 3000,
-      //   position: 'top'
-      // });
-      // toast.present();
-    // });
+        err =>{ console.warn("Signup error: "+err); loading.dismissAll();alert.present()});
   }
 }
