@@ -15,7 +15,6 @@ import { MainPage } from '../pages';
   templateUrl: 'welcome.html'
 })
 export class WelcomePage {
-// testing HTTP onlyn
   users: Observable<any>;
   email=null;
   password=null;
@@ -23,9 +22,7 @@ export class WelcomePage {
 
   login() {
     //TODO: need to re-use the existing login RESTful API
-    // this.navCtrl.push('LoginPage');
 
-    // testing with aipaishe cloud VM (OK!)
     console.log("login email:"+this.email);
     console.log("login pwd:"+this.password);
     let loading = this.loadingCtrl.create();

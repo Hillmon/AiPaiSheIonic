@@ -3,9 +3,9 @@ import { TranslateService } from '@ngx-translate/core';
 import {AlertController, IonicPage, LoadingController, NavController, ToastController} from 'ionic-angular';
 
 import { User } from '../../providers/providers';
-import { MainPage } from '../pages';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
+import {FirstRunPage} from "../pages";
 
 @IonicPage()
 @Component({
@@ -18,10 +18,10 @@ export class SignupPage {
   // If you're using the username field with or without email, make
   // sure to add it to the type
   account: { firstName: string, lastName: string, email: string, password: string } = {
-    firstName: 'Maomao',
-    lastName: 'Zheng',
-    email: 'mmz@maomao.com',
-    password: 'meow'
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: ''
   };
 
   // Our translated text strings
@@ -41,7 +41,6 @@ export class SignupPage {
   }
 
   doSignup() {
-    // testing with aipaishe cloud VM (OK!)
     console.log("signup first name:"+this.account.firstName);
     console.log("signup last name:"+this.account.lastName);
     console.log("signup email:"+this.account.email);
@@ -63,7 +62,7 @@ export class SignupPage {
               text:'OK',
               handler: ()=>{
                 loading.dismissAll();
-                this.navCtrl.push(MainPage);
+                this.navCtrl.push(FirstRunPage);
               }
             }
             ]});
