@@ -14,14 +14,16 @@ import {FirstRunPage} from "../pages";
 })
 export class SignupPage {
   users: Observable<Object>;
+
   // The account fields for the login form.
   // If you're using the username field with or without email, make
   // sure to add it to the type
-  account: { firstName: string, lastName: string, email: string, password: string } = {
+  account: { firstName: string, lastName: string, email: string, password: string, confirmPassword: string } = {
     firstName: '',
     lastName: '',
     email: '',
-    password: ''
+    password: '',
+    confirmPassword: ''
   };
 
   // Our translated text strings
