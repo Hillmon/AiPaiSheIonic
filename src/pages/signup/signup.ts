@@ -6,6 +6,7 @@ import { User } from '../../providers/providers';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {FirstRunPage} from "../pages";
+import {AbstractControl, FormControl, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 
 @IonicPage()
 @Component({
@@ -14,7 +15,17 @@ import {FirstRunPage} from "../pages";
 })
 export class SignupPage {
   users: Observable<Object>;
+  accountValidation: FormGroup;
 
+  ngOnInit(){
+    this.accountValidation = new FormGroup({
+      firstName: new FormControl('', [Validators.required]),
+      lastName: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
+      confirmPassword: new FormControl('', [Validators.required, this.equalto("password")]),
+    })
+  };
   // The account fields for the login form.
   // If you're using the username field with or without email, make
   // sure to add it to the type
@@ -72,5 +83,18 @@ export class SignupPage {
           notification.present();
         },
         err =>{ console.warn("Signup error: "+err); loading.dismissAll();alert.present()});
-  }
+  };
+
+  equalto(field_name): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} => {
+
+      let input = control.value;
+
+      let isValid=control.root.value[field_name]==input;
+      if(!isValid)
+        return { 'equalTo': {isValid} };
+      else
+        return null;
+    };
+  };
 }

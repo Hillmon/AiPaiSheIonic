@@ -8,38 +8,57 @@
 
 
 <ion-content>
-  <form (submit)="doSignup()">
+  <form (submit)="doSignup()" [formGroup]="accountValidation">
     <ion-list>
 
       <ion-item>
         <ion-label fixed>{{ 'First Name' | translate }}</ion-label>
-        <ion-input type="text" [(ngModel)]="account.firstName" name="name"></ion-input>
+        <ion-input type="text" [(ngModel)]="account.firstName" formControlName="firstName" name="name"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label fixed>{{ 'Last Name' | translate }}</ion-label>
-        <ion-input type="text" [(ngModel)]="account.lastName" name="name"></ion-input>
+        <ion-input type="text" [(ngModel)]="account.lastName" formControlName="lastName" name="name"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label fixed>{{ 'Email' | translate }}</ion-label>
-        <ion-input type="email" [(ngModel)]="account.email" name="email"></ion-input>
+        <ion-input type="email" [(ngModel)]="account.email" formControlName="email" name="email"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label fixed>{{ 'Password' | translate }}</ion-label>
-        <ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
+        <ion-input type="password" [(ngModel)]="account.password" formControlName="password"
+                   name="password"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label fixed>{{ 'Confirm Password' | translate }}</ion-label>
-        <ion-input type="password" [(ngModel)]="account.confirmPassword" name="password"></ion-input>
+        <ion-label fixed text-wrap>{{ 'Confirm Password' | translate }}</ion-label>
+        <ion-input type="password" [(ngModel)]="account.confirmPassword" formControlName="confirmPassword"
+                   name="password"></ion-input>
+      </ion-item>
+
+      <ion-item no-lines *ngIf="( accountValidation.get('confirmPassword').hasError('equalTo') ||
+        accountValidation.get('confirmPassword').hasError('required') )
+         && accountValidation.get('confirmPassword').touched">
+        <div class="error"
+             *ngIf="accountValidation.get('confirmPassword').hasError('equalTo') && accountValidation.get('confirmPassword').touched">
+          Password Mismatch
+        </div>
       </ion-item>
 
       <div padding>
-        <button ion-button color="primary" block>{{ 'SIGNUP_BUTTON' | translate }}</button>
+        <button ion-button color="primary" block [disabled]="accountValidation.invalid">{{ 'SIGNUP_BUTTON' | translate
+          }}
+        </button>
       </div>
-
     </ion-list>
   </form>
 </ion-content>
+
+<style type="text/css">
+  .error {
+    color: red;
+  }
+
+</style>
