@@ -37,10 +37,24 @@
     </div>
     <ion-list>
       <ion-item>
-        <ion-input type="text" placeholder="{{ 'ITEM_NAME_PLACEHOLDER' | translate }}" formControlName="name"></ion-input>
+        <ion-label>Name</ion-label>
+        <ion-input type="text" placeholder="{{ 'EVENT_NAME_PLACEHOLDER' | translate }}" formControlName="name"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input type="text" placeholder="{{ 'ITEM_ABOUT_PLACEHOLDER' | translate }}" formControlName="about"></ion-input>
+        <ion-label>Date</ion-label>
+        <ion-datetime displayFormat="DD MMM YYYY" formControlName="date"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>Time</ion-label>
+        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" formControlName="time"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>Venue</ion-label>
+        <ion-input type="text" placeholder="{{ 'EVENT_VENUE_PLACEHOLDER' | translate }}" formControlName="venue"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Description</ion-label>
+        <ion-input type="text" placeholder="{{ 'EVENT_DESC_PLACEHOLDER' | translate }}" formControlName="desc"></ion-input>
       </ion-item>
     </ion-list>
   </form>

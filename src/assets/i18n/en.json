@@ -51,11 +51,12 @@
 
   "LIST_MASTER_TITLE": "Featured Events",
 
-  "ITEM_CREATE_TITLE": "New Item",
-  "ITEM_CREATE_CHOOSE_IMAGE": "Add Image",
+  "ITEM_CREATE_TITLE": "New Event",
+  "ITEM_CREATE_CHOOSE_IMAGE": "Add Event Poster",
 
-  "ITEM_NAME_PLACEHOLDER": "Name",
-  "ITEM_ABOUT_PLACEHOLDER": "About",
+  "EVENT_NAME_PLACEHOLDER": "Event Name",
+  "EVENT_VENUE_PLACEHOLDER": "Venue",
+  "EVENT_DESC_PLACEHOLDER": "Description",
 
   "DONE_BUTTON": "Done",
   "CANCEL_BUTTON": "Cancel",
