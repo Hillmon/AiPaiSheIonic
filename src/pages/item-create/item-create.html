@@ -53,9 +53,28 @@
         <ion-input type="text" placeholder="{{ 'EVENT_VENUE_PLACEHOLDER' | translate }}" formControlName="venue"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label>Description</ion-label>
-        <ion-input type="text" placeholder="{{ 'EVENT_DESC_PLACEHOLDER' | translate }}" formControlName="desc"></ion-input>
+        <ion-label>Type</ion-label>
+        <ion-select formControlName="type">
+          <ion-option value="training">Training</ion-option>
+          <ion-option value="running">Running</ion-option>
+          <ion-option value="crossfit">Cross Fit</ion-option>
+          <ion-option value="yoga">Yoga</ion-option>
+          <ion-option value="others">Others</ion-option>
+        </ion-select>
       </ion-item>
+      <ion-item>
+        <ion-label>Quota</ion-label>
+        <ion-input type="number" placeholder="{{ 'EVENT_QUOTA_PLACEHOLDER' | translate }}"
+                   formControlName="quota"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Paid Event</ion-label>
+        <ion-toggle formControlName="paid"></ion-toggle>
+      </ion-item>
+      <!--<ion-item>-->
+      <!--<ion-label>Description</ion-label>-->
+      <!--<ion-input type="text" placeholder="{{ 'EVENT_DESC_PLACEHOLDER' | translate }}" formControlName="desc"></ion-input>-->
+      <!--</ion-item>-->
     </ion-list>
   </form>
 </ion-content>

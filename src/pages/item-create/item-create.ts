@@ -24,8 +24,10 @@ export class ItemCreatePage {
       name: ['', Validators.required],
       date: ['', Validators.required],
       time: ['', Validators.required],
-      venue: ['',Validators.required],
-      desc: ['',Validators.required]
+      type: ['', Validators.required],
+      quota: ['10', Validators.required],
+      paid: ['false'],
+      venue: ['', Validators.required]
     });
 
     // Watch the form for changes, and

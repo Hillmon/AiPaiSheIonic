@@ -40,14 +40,20 @@ export class ListMasterPage {
 
         const params = new HttpParams()
           .set('owner', item['owner'])
+          .set('date', item['date'] + ' ' + item['time'])
           .set('name', item['name'])
           .set('venue', item['venue'])
-          .set('date', item['date'])
-          .set('desc', item['desc']);
+          .set('type', item['type'])
+          .set('quota', item['quota']);
 
         this.http.get("http://35.185.217.124:8080/createevent", {params}).subscribe(data => {
             console.log('Create event result: ', data);
             this.showAlert('Your new event has been created! Please share it to invite people to join!');
+
+            // open the page for the newly created event
+            this.navCtrl.push('ItemDetailPage', {
+              item: item
+            });
           },
           err =>{
             console.warn("Create event error: " + err);
