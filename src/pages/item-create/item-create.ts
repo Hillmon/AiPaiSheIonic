@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Camera } from '@ionic-native/camera';
 import { IonicPage, NavController, ViewController } from 'ionic-angular';
+import {User} from "../../providers/providers";
 
 @IonicPage()
 @Component({
@@ -17,10 +18,18 @@ export class ItemCreatePage {
 
   form: FormGroup;
 
-  constructor(public navCtrl: NavController, public viewCtrl: ViewController, formBuilder: FormBuilder, public camera: Camera) {
+  constructor(public navCtrl: NavController,
+              public viewCtrl: ViewController,
+              formBuilder: FormBuilder,
+              public camera: Camera,
+              public user: User) {
+
+    // retrieve the login user profile with the user service
+    let userProfile = this.user.getLoginUser();
+
     this.form = formBuilder.group({
       profilePic: [''],
-      owner: ['11'],
+      owner: [userProfile['id']],
       name: ['', Validators.required],
       date: ['', Validators.required],
       time: ['', Validators.required],

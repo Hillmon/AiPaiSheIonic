@@ -81,4 +81,18 @@ export class User {
   _loggedIn(resp) {
     this._user = resp.user;
   }
+
+  /**
+   * added by Hillmon on 3/3/2018
+   */
+  getLoginUser() {
+    return this._user;
+  }
+
+  /**
+   * added by Hillmon on 3/3/2018
+   */
+  setLoginUser(userProfile: any) {
+    this._user = userProfile;
+  }
 }

@@ -12,9 +12,14 @@
   </div>
 
   <div class="item-detail" padding>
-    <h2>{{item.name}}</h2>
-    <p>{{item.about}}</p>
+    <h2>Event Name: {{item.name}}</h2>
+    <p>Organizer: {{item.ownername}}</p>
+    <p>Venue: {{item.venue}}</p>
+    <p>Date: {{item.date}}</p>
+    <p>Time: {{item.time}}</p>
     <p>Event Type: {{item.type}}</p>
+    <p>Quota: {{item.quota}}</p>
+    <p>Description: {{item.about}}</p>
     <button ion-button block (click)="joinEvent()">Join Event</button>
   </div>
 </ion-content>

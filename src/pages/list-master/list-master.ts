@@ -46,9 +46,15 @@ export class ListMasterPage {
           .set('type', item['type'])
           .set('quota', item['quota']);
 
-        this.http.get("http://35.185.217.124:8080/createevent", {params}).subscribe(data => {
+        // create a new event via REST API
+        this.http.get("http://35.185.217.124:8080/event/create", {params}).subscribe(data => {
             console.log('Create event result: ', data);
             this.showAlert('Your new event has been created! Please share it to invite people to join!');
+
+            // load dummy image from GCP Storage if the profile pic does not exist
+            if (item['profilePic'] == '') {
+              item['profilePic'] = 'https://storage.googleapis.com/aipaishe/exercise-fitness.png';
+            }
 
             // open the page for the newly created event
             this.navCtrl.push('ItemDetailPage', {

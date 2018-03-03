@@ -3,6 +3,7 @@ import {AlertController, IonicPage, LoadingController, NavController} from 'ioni
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {MainPage} from '../pages';
+import {User} from '../../providers/providers';
 
 /**
  * The Welcome Page is a splash page that quickly describes the app,
@@ -20,7 +21,11 @@ export class WelcomePage {
   email = null;
   password = null;
 
-  constructor(public navCtrl: NavController, public httpClient: HttpClient, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController,
+              public httpClient: HttpClient,
+              public loadingCtrl: LoadingController,
+              public alertCtrl: AlertController,
+              public user: User) {
   }
 
   login() {
@@ -43,6 +48,11 @@ export class WelcomePage {
     this.users
       .subscribe(data => {
           console.log('login result: ', data);
+
+          // set the login user profile with the user service
+          let userProfile = data;
+          this.user.setLoginUser(userProfile);
+
           loading.dismissAll();
           this.navCtrl.push(MainPage);
         },
