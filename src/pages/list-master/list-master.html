@@ -16,16 +16,16 @@
 
   <ion-card *ngFor="let item of currentItems">
     <img *ngIf="item.profilePic!=null" [src]="item.profilePic" (click)="openItem(item)"/>
-    <ion-card-content>
+    <ion-card-content (click)="openItem(item)">
       <ion-card-title>
-        {{item.name}}
+        {{item.eventName}}
       </ion-card-title>
       <p>
-        {{item.about}}
+        {{item.eventVenue}}
       </p>
     </ion-card-content>
 
-    <ion-row *ngIf="item.profilePic!=null" no-padding>
+    <ion-row *ngIf="item.eventName!=null" no-padding>
       <ion-col>
         <button ion-button clear small color="danger" icon-start>
           <ion-icon name='star'></ion-icon>

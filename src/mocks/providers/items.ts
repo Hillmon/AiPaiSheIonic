@@ -7,23 +7,38 @@ export class Items {
   items: Item[] = [];
 
   defaultItem: any = {
-    "name": "Oops, no event yet. Why not create one?"
+    "eventName": "Oops, no event yet. Why not create one?"
   };
 
 
   constructor(public httpClient:HttpClient) {
-    let items = [
-      {
-        "name": "Oops, no event yet. Why not create one?"
-      }
-    ];
 
-    for (let item of items) {
-      this.items.push(new Item(item));
-    }
   }
 
   query(params?: any) {
+    let items = [
+      {
+        "eventName": "Oops, no event yet. Why not create one?"
+      }
+    ];
+
+    let eventsRequest = this.httpClient.get('http://35.185.217.124:8080/event/get-all');
+
+    eventsRequest
+      .subscribe(data => {
+          console.log('eventsRequest response: ', data);
+
+          items=<any>data;
+
+          for (let item of items) {
+            this.items.push(new Item(item));
+          }
+        },
+        err => {
+          let errJson = JSON.parse(err.error);
+          console.log('Error occurred: '+errJson);
+        });
+
     if (!params) {
       return this.items;
     }
