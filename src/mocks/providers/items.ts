@@ -1,62 +1,20 @@
-import { Injectable } from '@angular/core';
-
-import { Item } from '../../models/item';
+import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {Item} from '../../models/item';
 
 @Injectable()
 export class Items {
   items: Item[] = [];
 
   defaultItem: any = {
-    "name": "Burt Bear",
-    "profilePic": "assets/img/speakers/bear.jpg",
-    "about": "Burt is a Bear.",
-    "type": "yoga"
+    "name": "Oops, no event yet. Why not create one?"
   };
 
 
-  constructor() {
+  constructor(public httpClient:HttpClient) {
     let items = [
       {
-        "name": "Burt Bear",
-        "profilePic": "assets/img/speakers/bear.jpg",
-        "about": "Burt is a Bear.",
-        "type": "yoga"
-      },
-      {
-        "name": "Charlie Cheetah",
-        "profilePic": "assets/img/speakers/cheetah.jpg",
-        "about": "Charlie is a Cheetah.",
-        "type": "running"
-      },
-      {
-        "name": "Donald Duck",
-        "profilePic": "assets/img/speakers/duck.jpg",
-        "about": "Donald is a Duck.",
-        "type": "yoga"
-      },
-      {
-        "name": "Eva Eagle",
-        "profilePic": "assets/img/speakers/eagle.jpg",
-        "about": "Eva is an Eagle.",
-        "type": "running"
-      },
-      {
-        "name": "Ellie Elephant",
-        "profilePic": "assets/img/speakers/elephant.jpg",
-        "about": "Ellie is an Elephant.",
-        "type": "yoga"
-      },
-      {
-        "name": "Molly Mouse",
-        "profilePic": "assets/img/speakers/mouse.jpg",
-        "about": "Molly is a Mouse.",
-        "type": "running"
-      },
-      {
-        "name": "Paul Puppy",
-        "profilePic": "assets/img/speakers/puppy.jpg",
-        "about": "Paul is a Puppy.",
-        "type": "yoga"
+        "name": "Oops, no event yet. Why not create one?"
       }
     ];
 
