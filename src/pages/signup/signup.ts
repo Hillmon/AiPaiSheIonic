@@ -70,7 +70,7 @@ export class SignupPage {
           console.log('Signup result: ', data);
 
           let notification = this.alertCtrl.create({title: 'Signup Successfully!',
-            subTitle: 'Please active the account by confirming the link in your email',
+            subTitle: 'Please activate the account by confirming the link in your email',
             buttons: [{
               text:'OK',
               handler: ()=>{
