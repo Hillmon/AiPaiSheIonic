@@ -53,10 +53,9 @@
 
   "ITEM_CREATE_TITLE": "New Event",
   "ITEM_CREATE_CHOOSE_IMAGE": "Add Event Poster",
-
-  "EVENT_NAME_PLACEHOLDER": "Event Name",
-  "EVENT_VENUE_PLACEHOLDER": "Venue",
-  "EVENT_DESC_PLACEHOLDER": "Description",
+  "EVENT_NAME_PLACEHOLDER": "e.g. Yoga Training",
+  "EVENT_VENUE_PLACEHOLDER": "e.g. Cityplaza Clubhouse",
+  "EVENT_DESC_PLACEHOLDER": "e.g. This is a cool event to join.",
 
   "DONE_BUTTON": "Done",
   "CANCEL_BUTTON": "Cancel",

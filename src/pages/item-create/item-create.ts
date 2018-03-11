@@ -1,7 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Camera } from '@ionic-native/camera';
-import { IonicPage, NavController, ViewController } from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Camera} from '@ionic-native/camera';
+import {IonicPage, NavController, ViewController} from 'ionic-angular';
 import {User} from "../../providers/providers";
 
 @IonicPage()
@@ -50,6 +50,7 @@ export class ItemCreatePage {
   }
 
   getPicture() {
+    /*
     if (Camera['installed']()) {
       this.camera.getPicture({
         destinationType: this.camera.DestinationType.DATA_URL,
@@ -63,6 +64,10 @@ export class ItemCreatePage {
     } else {
       this.fileInput.nativeElement.click();
     }
+    */
+
+    // no camera support, for testing only
+    this.fileInput.nativeElement.click();
   }
 
   processWebImage(event) {
