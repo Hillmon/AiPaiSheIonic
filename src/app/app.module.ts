@@ -8,7 +8,6 @@ import {IonicStorageModule, Storage} from '@ionic/storage';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
-import {FileTransfer} from "@ionic-native/file-transfer";
 
 import {Items} from '../mocks/providers/items';
 import {Api, Settings, User} from '../providers/providers';
@@ -65,8 +64,7 @@ export function provideSettings(storage: Storage) {
     StatusBar,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    FileTransfer
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
 export class AppModule { }

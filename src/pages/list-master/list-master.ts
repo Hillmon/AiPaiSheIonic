@@ -12,7 +12,6 @@ import {Item} from '../../models/item';
 import {Items} from '../../providers/providers';
 import {Api} from "../../providers/api/api";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {FileTransfer, FileTransferObject, FileUploadOptions} from "@ionic-native/file-transfer";
 
 @IonicPage()
 @Component({
@@ -20,6 +19,7 @@ import {FileTransfer, FileTransferObject, FileUploadOptions} from "@ionic-native
   templateUrl: 'list-master.html'
 })
 export class ListMasterPage {
+
   currentItems: Item[];
 
   constructor(public navCtrl: NavController,
@@ -29,7 +29,6 @@ export class ListMasterPage {
               public api: Api,
               public http: HttpClient,
               public loadingCtrl: LoadingController,
-              private transfer: FileTransfer,
               public toastCtrl: ToastController) {
     this.currentItems = this.items.query();
   }
@@ -50,6 +49,11 @@ export class ListMasterPage {
       if (item) {
         // this.items.add(item);
 
+        let loader = this.loadingCtrl.create({
+          content: "Creating the event...please wait..."
+        });
+        loader.present();
+
         for (let param in item) {
           console.log('[Debug] Parameter Found: ' + param + " = " + item[param]);
         }
@@ -64,20 +68,20 @@ export class ListMasterPage {
 
         // create a new event via REST API
         this.http.get("http://35.185.217.124:8080/event/create", {params}).subscribe(data => {
-            console.log('Create event result: ', data);
-            this.showAlert('Your new event has been created! Please share it to invite people to join!');
+            console.log('Create event database record result: ', data);
 
-            // load dummy image from GCP Storage if the profile pic does not exist
             if (item['profilePic'] == '') {
+              // load "default" poster image from GCP Storage if the profile pic does not exist
               item['profilePic'] = 'https://storage.googleapis.com/aipaishe/exercise-fitness.png';
             }
             else {
-              // upload the poster to cloud storage
-              // upload the profile pic to cloud storage
-
+              // upload the poster to GCP cloud storage, generate the public URL
               console.log("uploading the poster for new event: " + data['eventId']);
               this.uploadFile(item['profilePic'], data['eventId']);
             }
+
+            loader.dismiss();
+            this.presentToast('Your new event has been created! Please share it to invite people to join!');
 
             // open the page for the newly created event
             this.navCtrl.push('ItemDetailPage', {
@@ -86,79 +90,48 @@ export class ListMasterPage {
           },
           err => {
             console.warn("Create event error: " + err);
-            this.showAlert('Event cannot be created! Please contact Aipaishe development team!');
+            this.presentToast('Event cannot be created! Please contact Aipaishe development team!');
           });
-
-        /*
-        this.api.get('createevent', item).subscribe(data => {
-            console.log('Create event result: ', data);
-            this.showAlert('Your new event has been created! Please share it to invite people to join!');
-            //this.navCtrl.push(MainPage);
-          },
-          err =>{
-          console.warn("Create event error: " + err);
-          this.showAlert('New event cannot be created! Please contact Aipaishe development team!');
-        });
-        */
       }
     });
     addModal.present();
   }
 
-  uploadFile(imgData: any, eventId: any) {
-    let apiUrl = 'http://localhost:8080/upload2cloud';
+  uploadFile(imgUri: any, eventId: any) {
+    let apiUrl = "http://35.185.217.124:8080/upload2cloud";
 
-    let loader = this.loadingCtrl.create({
-      content: "Uploading the photo..."
-    });
-    loader.present();
+    const formData = new FormData();
 
-    const fileTransfer: FileTransferObject = this.transfer.create();
+    const imgBlob = this.dataURItoBlob(imgUri, "image/jpeg");
 
-    let options: FileUploadOptions = {
-      fileKey: 'ionicfile',
-      fileName: 'ionicfile',
-      chunkedMode: false,
-      mimeType: "image/jpeg",
-      params: {
-        "eventId": eventId,
-        "eventName": 'Upload Test'
-      },
-      headers: {}
+    console.log(imgBlob);
+
+    // generate XHR form data, including upload file binary and request parameters
+    formData.append('files', imgBlob, 'ionic-test-upload.jpeg');
+    formData.append("event_id", eventId);
+    formData.append("file_type", "poster");
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", apiUrl, true);
+
+    /*
+    xhr.upload.onprogress = (event) => {
+      this.progress = Math.round(event.loaded / event.total * 100);
+
+      this.progressObserver.next(this.progress);
+    };
+    */
+
+    xhr.onload = function () {
+      var jsonResponse = JSON.parse(xhr.responseText);
+
+      // do something with jsonResponse
+      console.log("XHR upload OK! File URLs received in XHR response.");
+      console.log(jsonResponse);
     };
 
-    /*
-    fileTransfer.onProgress((e)=>
-    {
-      this.prg=(e.lengthComputable) ?  Math.round((e.loaded * 100) / e.total) : -1;
-      this.changeDetectorRef.detectChanges();
-    });
-    */
-
-    /*
-    fileTransfer.upload('https://storage.googleapis.com/aipaishe/exercise-fitness.png', apiUrl, options).then((res) =>
-    {
-      console.log(JSON.stringify(res));
-      loader.dismissAll();
-    },(err)=> {
-      this.showAlert(err);
-      console.error(err);
-    });
-
-    */
-
-    fileTransfer.upload(imgData, encodeURI(apiUrl), options)
-      .then((data) => {
-        console.log(data + " Uploaded Successfully");
-        // this.imageFileName = "http://192.168.0.7:8080/static/images/ionicfile.jpg"
-        loader.dismiss();
-        this.presentToast("Image uploaded successfully");
-      }, (err) => {
-        console.log(err);
-        loader.dismiss();
-        this.presentToast(err);
-      });
-
+    // Send the XHR request to REST endpoint
+    xhr.send(formData);
   }
 
   /**
@@ -198,5 +171,12 @@ export class ListMasterPage {
     });
 
     toast.present();
+  }
+
+  // convert base64 data URI (from camera or file storage) to Blob for XHR upload
+  dataURItoBlob(dataURI, dataTYPE) {
+    var binary = atob(dataURI.split(',')[1]), array = [];
+    for (var i = 0; i < binary.length; i++) array.push(binary.charCodeAt(i));
+    return new Blob([new Uint8Array(array)], {type: dataTYPE});
   }
 }
