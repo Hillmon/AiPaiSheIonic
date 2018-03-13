@@ -71,6 +71,7 @@ export class ItemCreatePage {
         this.form.patchValue({ 'profilePic': 'data:image/jpg;base64,' + data });
       }, (err) => {
         alert('Unable to take photo');
+        console.error(err);
       })
     } else {
       this.fileInput.nativeElement.click();
@@ -85,7 +86,9 @@ export class ItemCreatePage {
       this.form.patchValue({ 'profilePic': imageData });
     };
 
-    reader.readAsDataURL(event.target.files[0]);
+    if (event.target.files[0]) {
+      reader.readAsDataURL(event.target.files[0]);
+    }
   }
 
   getProfileImageStyle() {
