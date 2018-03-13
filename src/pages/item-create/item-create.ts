@@ -4,6 +4,8 @@ import {Camera} from '@ionic-native/camera';
 import {IonicPage, NavController, ViewController} from 'ionic-angular';
 import {User} from "../../providers/providers";
 
+declare var google;
+
 @IonicPage()
 @Component({
   selector: 'page-item-create',
@@ -35,7 +37,6 @@ export class ItemCreatePage {
       time: ['', Validators.required],
       type: ['', Validators.required],
       quota: ['10', Validators.required],
-      paid: ['false'],
       venue: ['', Validators.required]
     });
 
@@ -49,8 +50,18 @@ export class ItemCreatePage {
 
   }
 
+  ionViewWillEnter() {
+    // Google Places API auto complete
+    let input = document.getElementById('venue_input').getElementsByTagName('input')[0];
+    let autocomplete = new google.maps.places.Autocomplete(input, {types: ['geocode']});
+    google.maps.event.addListener(autocomplete, 'place_changed', () => {
+      // retrieve the place object for your use
+      let place = autocomplete.getPlace();
+      console.log(place);
+    });
+  }
+
   getPicture() {
-    /*
     if (Camera['installed']()) {
       this.camera.getPicture({
         destinationType: this.camera.DestinationType.DATA_URL,
@@ -64,10 +75,6 @@ export class ItemCreatePage {
     } else {
       this.fileInput.nativeElement.click();
     }
-    */
-
-    // no camera support, for testing only
-    this.fileInput.nativeElement.click();
   }
 
   processWebImage(event) {
