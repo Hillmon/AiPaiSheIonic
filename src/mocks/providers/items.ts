@@ -16,6 +16,8 @@ export class Items {
   }
 
   query(params?: any) {
+    this.items=[];
+
     let items = [
       {
         "eventName": "Oops, no event yet. Why not create one?"
@@ -33,6 +35,10 @@ export class Items {
           for (let item of items) {
             this.items.push(new Item(item));
           }
+
+          this.items.sort(function (obj1, obj2) {
+            return obj2["eventId"]-obj1["eventId"];
+          })
         },
         err => {
           let errJson = JSON.parse(err.error);

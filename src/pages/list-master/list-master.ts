@@ -33,13 +33,16 @@ export class ListMasterPage {
               public http: HttpClient,
               public loadingCtrl: LoadingController,
               public toastCtrl: ToastController) {
-    this.currentItems = this.items.query();
   }
 
   /**
    * The view loaded, let's query our items for the list
    */
   ionViewDidLoad() {
+  }
+
+  ionViewWillEnter(){
+    this.currentItems=this.items.query();
   }
 
   /**
