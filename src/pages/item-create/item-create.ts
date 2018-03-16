@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Camera} from '@ionic-native/camera';
+import {Camera, CameraOptions} from '@ionic-native/camera';
 import {IonicPage, NavController, ViewController} from 'ionic-angular';
 import {User} from "../../providers/providers";
 
@@ -63,7 +63,9 @@ export class ItemCreatePage {
 
   getPicture() {
     if (Camera['installed']()) {
+      /*
       this.camera.getPicture({
+
         destinationType: this.camera.DestinationType.DATA_URL,
         targetWidth: 96,
         targetHeight: 96
@@ -73,6 +75,25 @@ export class ItemCreatePage {
         alert('Unable to take photo');
         console.error(err);
       })
+      */
+
+      const options: CameraOptions = {
+        quality: 100,
+        destinationType: this.camera.DestinationType.DATA_URL,
+        encodingType: this.camera.EncodingType.JPEG,
+        mediaType: this.camera.MediaType.PICTURE
+      };
+
+      this.camera.getPicture(options).then((imageData) => {
+        // imageData is either a base64 encoded string or a file URI
+        // If it's base64:
+        let base64Image = 'data:image/jpeg;base64,' + imageData;
+        this.form.patchValue({'profilePic': base64Image});
+      }, (err) => {
+        // Handle error
+        console.error(err);
+        alert('Error encountered! Unable to take photo!');
+      });
     } else {
       this.fileInput.nativeElement.click();
     }
@@ -83,7 +104,7 @@ export class ItemCreatePage {
     reader.onload = (readerEvent) => {
 
       let imageData = (readerEvent.target as any).result;
-      this.form.patchValue({ 'profilePic': imageData });
+      this.form.patchValue({'profilePic': imageData});
     };
 
     if (event.target.files[0]) {
@@ -107,7 +128,9 @@ export class ItemCreatePage {
    * back to the presenter.
    */
   done() {
-    if (!this.form.valid) { return; }
+    if (!this.form.valid) {
+      return;
+    }
     this.viewCtrl.dismiss(this.form.value);
   }
 }
