@@ -59,12 +59,12 @@ export class ListMasterPage {
         }
 
         const params = new HttpParams()
-          .set('owner', item['owner'])
-          .set('date', item['date'] + ' ' + item['time'])
-          .set('name', item['name'])
-          .set('venue', item['venue'])
-          .set('type', item['type'])
-          .set('quota', item['quota']);
+          .set('owner', item['ownerId'])
+          .set('date', item['eventDate'] + ' ' + item['eventTime'])
+          .set('name', item['eventName'])
+          .set('venue', item['eventVenue'])
+          .set('type', item['eventType'])
+          .set('quota', item['eventQuota']);
 
         // create a new event via REST API
         this.http.get("http://35.185.217.124:8080/event/create", {params}).subscribe(data => {
@@ -143,6 +143,7 @@ export class ListMasterPage {
 
   /**
    * Navigate to the detail page for this item.
+   * Edited by Hillmon on 16/03/2018
    */
   openItem(item: Item) {
     this.navCtrl.push('ItemDetailPage', {

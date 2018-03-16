@@ -38,24 +38,25 @@
     <ion-list>
       <ion-item>
         <ion-label fixed>Name</ion-label>
-        <ion-input type="text" placeholder="{{ 'EVENT_NAME_PLACEHOLDER' | translate }}" formControlName="name"></ion-input>
+        <ion-input type="text" placeholder="{{ 'EVENT_NAME_PLACEHOLDER' | translate }}"
+                   formControlName="eventName"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label fixed>Date</ion-label>
-        <ion-datetime displayFormat="DD MMM YYYY" formControlName="date"></ion-datetime>
+        <ion-datetime displayFormat="DD MMM YYYY" formControlName="eventDate"></ion-datetime>
       </ion-item>
       <ion-item>
         <ion-label fixed>Time</ion-label>
-        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" formControlName="time"></ion-datetime>
+        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" formControlName="eventTime"></ion-datetime>
       </ion-item>
       <ion-item>
         <ion-label fixed>Venue</ion-label>
         <ion-input id="venue_input" type="text" placeholder="{{ 'EVENT_VENUE_PLACEHOLDER' | translate }}"
-                   formControlName="venue"></ion-input>
+                   formControlName="eventVenue"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label fixed>Type</ion-label>
-        <ion-select formControlName="type">
+        <ion-select formControlName="eventType">
           <ion-option value="training">Training</ion-option>
           <ion-option value="running">Running</ion-option>
           <ion-option value="crossfit">Cross Fit</ion-option>
@@ -66,7 +67,7 @@
       <ion-item>
         <ion-label fixed>Quota</ion-label>
         <ion-input type="number" placeholder="{{ 'EVENT_QUOTA_PLACEHOLDER' | translate }}"
-                   formControlName="quota"></ion-input>
+                   formControlName="eventQuota"></ion-input>
       </ion-item>
       <!--<ion-item>-->
       <!--<ion-label fixed>Paid Event</ion-label>-->

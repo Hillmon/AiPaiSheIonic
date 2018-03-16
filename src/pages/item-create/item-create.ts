@@ -31,13 +31,13 @@ export class ItemCreatePage {
 
     this.form = formBuilder.group({
       profilePic: [''],
-      owner: [userProfile['id']],
-      name: ['', Validators.required],
-      date: ['', Validators.required],
-      time: ['', Validators.required],
-      type: ['', Validators.required],
-      quota: ['10', Validators.required],
-      venue: ['', Validators.required]
+      ownerId: [userProfile['id']],
+      eventName: ['', Validators.required],
+      eventDate: ['', Validators.required],
+      eventTime: ['', Validators.required],
+      eventType: ['', Validators.required],
+      eventQuota: ['10', Validators.required],
+      eventVenue: ['', Validators.required]
     });
 
     // Watch the form for changes, and
@@ -57,6 +57,9 @@ export class ItemCreatePage {
     google.maps.event.addListener(autocomplete, 'place_changed', () => {
       // retrieve the place object for your use
       let place = autocomplete.getPlace();
+
+      // update the return address to the UI form
+      this.form.patchValue({'eventVenue': place['formatted_address']});
       console.log(place);
     });
   }
