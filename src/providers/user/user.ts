@@ -1,8 +1,9 @@
 import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/share';
 
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
-import { Api } from '../api/api';
+import {Api} from '../api/api';
 
 /**
  * Most apps have the concept of a User. This is a simple provider
