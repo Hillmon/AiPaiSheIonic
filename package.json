@@ -67,6 +67,9 @@
       "cordova-plugin-advanced-http": {},
       "cordova-plugin-camera": {},
       "cordova-plugin-file": {},
+      "cordova-plugin-wechat": {
+        "WECHATAPPID": "i-dont-know"
+      },
       "cordova-plugin-statusbar": {}
     },
     "platforms": [

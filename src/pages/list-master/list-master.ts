@@ -13,11 +13,14 @@ import {Items} from '../../providers/providers';
 import {Api} from "../../providers/api/api";
 import {HttpClient, HttpParams} from "@angular/common/http";
 
+declare var window;
+
 @IonicPage()
 @Component({
   selector: 'page-list-master',
   templateUrl: 'list-master.html'
 })
+
 export class ListMasterPage {
 
   currentItems: Item[];
@@ -174,6 +177,38 @@ export class ListMasterPage {
     toast.present();
   }
 
+  wechatShare(item: Item){
+    if(window.Wechat == null){
+      alert("Wechat not installed");
+      return false;
+    }
+
+    window.Wechat.isInstalled(function (installed) {
+      if (!installed) {
+        alert("Wechat not installed");
+        return false
+      }
+    }, function (reason) {
+      alert('Failed' + reason);
+    });
+
+    window.Wechat.share({
+      message: {
+        title: item["eventName"],
+        description: item["eventDesc"],
+        thumb: "https://pbs.twimg.com/profile_images/671419930269638656/j5s9l3B9.jpg",
+        media: {
+          type: window.Wechat.Type.WEBPAGE,   // webpage
+          webpageUrl: "https://en.wikipedia.org/wiki/Mark_Zuckerberg"    // webp
+        }
+      },
+      scene: window.Wechat.Scene.TIMELINE   // share to Timeline
+    }, function () {
+      alert("Success");
+    }, function (reason) {
+      alert("Failed: " + reason);
+    });
+  }
   // convert base64 data URI (from camera or file storage) to Blob for XHR upload
   dataURItoBlob(dataURI, dataTYPE) {
     var binary = atob(dataURI.split(',')[1]), array = [];
