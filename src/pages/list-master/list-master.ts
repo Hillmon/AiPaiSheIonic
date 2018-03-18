@@ -76,6 +76,7 @@ export class ListMasterPage {
         this.http.get("http://35.185.217.124:8080/event/create", {params}).subscribe(data => {
             console.log('Create event database record result: ', data);
 
+            /*
             if (item['profilePic'] == '') {
               // load "default" poster image from GCP Storage if the profile pic does not exist
               item['profilePic'] = 'https://storage.googleapis.com/aipaishe/exercise-fitness.png';
@@ -85,9 +86,19 @@ export class ListMasterPage {
               console.log("uploading the poster for new event: " + data['eventId']);
               this.uploadFile(item['profilePic'], data['eventId']);
             }
+            */
+
+            if (item['profilePic']) {
+              // upload the poster to GCP cloud storage, generate the public URL
+              console.log("uploading the poster for new event: " + data['eventId']);
+              this.uploadFile(item['profilePic'], data['eventId']);
+            }
 
             loader.dismiss();
             this.presentToast('Your new event has been created! Please share it to invite people to join!');
+
+            // set the event ID after successful creation
+            item['eventId'] = data['eventId'];
 
             // open the page for the newly created event
             this.navCtrl.push('ItemDetailPage', {
