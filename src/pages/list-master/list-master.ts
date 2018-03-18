@@ -181,11 +181,6 @@ export class ListMasterPage {
   }
 
   wechatShare(item: Item){
-    if(window.Wechat == null){
-      alert("Wechat not installed");
-      return false;
-    }
-
     window.Wechat.isInstalled(function (installed) {
       if (!installed) {
         alert("Wechat not installed");
@@ -196,15 +191,7 @@ export class ListMasterPage {
     });
 
     window.Wechat.share({
-      message: {
-        title: item["eventName"],
-        description: item["eventDesc"],
-        thumb: "https://pbs.twimg.com/profile_images/671419930269638656/j5s9l3B9.jpg",
-        media: {
-          type: window.Wechat.Type.WEBPAGE,   // webpage
-          webpageUrl: "https://en.wikipedia.org/wiki/Mark_Zuckerberg"    // webp
-        }
-      },
+      text: "APS Testing",
       scene: window.Wechat.Scene.TIMELINE   // share to Timeline
     }, function () {
       alert("Success");
