@@ -112,7 +112,7 @@ export class ItemDetailPage {
           console.log('Return Data: ');
           console.log(data);
 
-          this.presentToast("You have joined this event successfully!");
+          this.loader.dismissAll();
           this.alreadyJoin = true;
           this.btnText = 'You are already in!';
 
