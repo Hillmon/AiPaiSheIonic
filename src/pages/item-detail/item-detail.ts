@@ -111,9 +111,10 @@ export class ItemDetailPage {
 
           console.log('Return Data: ');
           console.log(data);
-          if (data[0]) {
-            // this.item['profilePic'] = data[0]['location'];
-          }
+
+          this.presentToast("You have joined this event successfully!");
+          this.alreadyJoin = true;
+          this.btnText = 'You are already in!';
 
         },
         err => {
@@ -173,7 +174,7 @@ export class ItemDetailPage {
 
           if (data) {
             this.alreadyJoin = true;
-            this.btnText = 'You are already in!'
+            this.btnText = 'You are already in!';
           }
           else {
             this.alreadyJoin = false;
