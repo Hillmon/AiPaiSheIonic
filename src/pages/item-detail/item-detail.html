@@ -21,6 +21,6 @@
     <p>Event Type: {{item.eventType}}</p>
     <p>Quota: {{item.eventQuota}}</p>
     <!--<p>Description: {{item.eventDesc}}</p>-->
-    <button ion-button block (click)="joinEvent()">Join Event</button>
+    <button ion-button block (click)="joinEvent()" [disabled]="alreadyJoin">{{btnText}}</button>
   </div>
 </ion-content>
