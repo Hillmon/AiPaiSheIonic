@@ -16,6 +16,7 @@
 
   <ion-card *ngFor="let item of currentItems">
     <img *ngIf="item.profilePic!=null" [src]="item.profilePic" (click)="openItem(item)"/>
+
     <ion-card-content (click)="openItem(item)">
       <ion-card-title>
         {{item.eventName}}

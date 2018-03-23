@@ -41,7 +41,7 @@ export class ListMasterPage {
   ionViewDidLoad() {
   }
 
-  ionViewWillEnter(){
+  ionViewCanEnter(){
     this.currentItems=this.items.query();
   }
 
@@ -75,18 +75,6 @@ export class ListMasterPage {
         // create a new event via REST API
         this.http.get("http://35.185.217.124:8080/event/create", {params}).subscribe(data => {
             console.log('Create event database record result: ', data);
-
-            /*
-            if (item['profilePic'] == '') {
-              // load "default" poster image from GCP Storage if the profile pic does not exist
-              item['profilePic'] = 'https://storage.googleapis.com/aipaishe/exercise-fitness.png';
-            }
-            else {
-              // upload the poster to GCP cloud storage, generate the public URL
-              console.log("uploading the poster for new event: " + data['eventId']);
-              this.uploadFile(item['profilePic'], data['eventId']);
-            }
-            */
 
             if (item['profilePic']) {
               // upload the poster to GCP cloud storage, generate the public URL

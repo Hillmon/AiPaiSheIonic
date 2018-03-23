@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Item} from '../../models/item';
 
 @Injectable()
@@ -11,12 +11,12 @@ export class Items {
   };
 
 
-  constructor(public httpClient:HttpClient) {
+  constructor(public httpClient: HttpClient) {
 
   }
 
   query(params?: any) {
-    this.items=[];
+    this.items = [];
 
     let items = [
       {
@@ -28,21 +28,41 @@ export class Items {
 
     eventsRequest
       .subscribe(data => {
-          console.log('eventsRequest response: ', data);
+          // console.log('eventsRequest response: ', data);
 
-          items=<any>data;
+          console.log("In beginning of event http call, items size " + items.length);
+
+          items = <any>data;
+
 
           for (let item of items) {
-            this.items.push(new Item(item));
-          }
 
-          this.items.sort(function (obj1, obj2) {
-            return obj2["eventId"]-obj1["eventId"];
-          })
+            let posterRequestParams = new HttpParams()
+              .set('eventId', item['eventId'])
+              .set('fileType', 'poster');
+
+            // console.log("Retrieving posters request "+posterRequestParams);
+            this.httpClient.get('http://35.185.217.124:8080/file/load', {params: posterRequestParams}).subscribe(data => {
+                if (data[0]) {
+                  item['profilePic'] = data[0]['location'];
+                }
+
+                let eventItemWithNoPhoto = new Item(item);
+
+                this.items.push(eventItemWithNoPhoto);
+
+                this.items.sort(function (obj1, obj2) {
+                  return obj2["eventId"] - obj1["eventId"];
+                });
+              },
+              err => {
+                console.warn(err);
+              });
+          }
         },
         err => {
           let errJson = JSON.parse(err.error);
-          console.log('Error occurred: '+errJson);
+          console.log('Error occurred: ' + errJson);
         });
 
     if (!params) {
