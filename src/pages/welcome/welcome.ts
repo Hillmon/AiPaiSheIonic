@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {AlertController, IonicPage, LoadingController, NavController} from 'ionic-angular';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {MainPage} from '../pages';
 import {User} from '../../providers/providers';
@@ -31,8 +31,12 @@ export class WelcomePage {
   login() {
     console.log("login email:" + this.email);
     console.log("login pwd:" + this.password);
-    let loading = this.loadingCtrl.create();
-    loading.present();
+
+    let loader = this.loadingCtrl.create({
+      content: 'Logging in...please wait...',
+      duration: 3000
+    });
+    loader.present();
 
     /**
      * edited by Hillmon on 20/02/2018, replaced by a common alert function
@@ -44,26 +48,31 @@ export class WelcomePage {
       buttons: ['Dismiss']
     });
     */
-    this.users = this.httpClient.get('http://35.185.217.124:8080/user/login?email=' + this.email + '&password=' + this.password);
-    this.users
-      .subscribe(data => {
+
+    const params = new HttpParams()
+      .set('email', this.email)
+      .set('password', this.password);
+
+    this.httpClient.get('http://35.185.217.124:8080/user/login', {params}).subscribe(data => {
           console.log('login result: ', data);
 
           // set the login user profile with the user service
           let userProfile = data;
           this.user.setLoginUser(userProfile);
 
-          loading.dismissAll();
+        loader.dismissAll();
           this.navCtrl.push(MainPage);
         },
         err => {
-          let errJson = JSON.parse(err.error);
-          console.warn(errJson);
-          loading.dismissAll();
+          // let errJson = JSON.parse(err.error);
+          // console.warn(errJson);
+          console.error('Log in error!!!');
+          console.error(err);
+          loader.dismissAll();
 
           let alert = this.alertCtrl.create({
-            title: 'Login Failed',
-            subTitle: errJson['message'],
+            title: 'Log In Error',
+            subTitle: err['message'],
             buttons: ['Dismiss']
           });
 
