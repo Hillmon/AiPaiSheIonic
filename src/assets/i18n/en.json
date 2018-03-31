@@ -56,8 +56,8 @@
   "EVENT_NAME_PLACEHOLDER": "e.g. Yoga Training",
   "EVENT_VENUE_PLACEHOLDER": "e.g. Cityplaza Clubhouse",
   "EVENT_DESC_PLACEHOLDER": "e.g. This is a cool event to join.",
-
-  "DONE_BUTTON": "Done",
+  "EVENT_QUOTA_PLACEHOLDER": "How many people can be allowed?",
+  "DONE_BUTTON": "Add this event!",
   "CANCEL_BUTTON": "Cancel",
   "DELETE_BUTTON": "Delete",
 

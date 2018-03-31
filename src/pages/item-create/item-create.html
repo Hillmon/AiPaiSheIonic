@@ -10,21 +10,21 @@
         <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-buttons end>
+    <!--ion-buttons end>
       <button ion-button (click)="done()" [disabled]="!isReadyToSave" strong>
         <span color="primary" showWhen="ios">
           {{ 'DONE_BUTTON' | translate }}
         </span>
         <ion-icon name="md-checkmark" showWhen="core,android,windows"></ion-icon>
       </button>
-    </ion-buttons>
+    </ion-buttons-->
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
-  <form *ngIf="form" [formGroup]="form" (ngSubmit)="createItem()">
+  <form *ngIf="form" [formGroup]="form">
     <input type="file" #fileInput style="visibility: hidden; height: 0px" name="files[]" (change)="processWebImage($event)" />
     <div class="profile-image-wrapper" (click)="getPicture()">
       <div class="profile-image-placeholder" *ngIf="!this.form.controls.profilePic.value">
@@ -41,18 +41,30 @@
         <ion-input type="text" placeholder="{{ 'EVENT_NAME_PLACEHOLDER' | translate }}"
                    formControlName="eventName"></ion-input>
       </ion-item>
+      <ion-item *ngIf="!form.controls.eventName.valid && form.controls.eventName.dirty">
+        <p style="font-weight: bold; color: red;">Event Name cannot be empty!</p>
+      </ion-item>
       <ion-item>
         <ion-label fixed>Date</ion-label>
         <ion-datetime displayFormat="DD MMM YYYY" formControlName="eventDate"></ion-datetime>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.eventDate.valid && form.controls.eventDate.dirty">
+        <p style="font-weight: bold; color: red;">Event Date cannot be empty!</p>
       </ion-item>
       <ion-item>
         <ion-label fixed>Time</ion-label>
         <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" formControlName="eventTime"></ion-datetime>
       </ion-item>
+      <ion-item *ngIf="!form.controls.eventTime.valid && form.controls.eventTime.dirty">
+        <p style="font-weight: bold; color: red;">Event Time cannot be empty!</p>
+      </ion-item>
       <ion-item>
         <ion-label fixed>Venue</ion-label>
         <ion-input id="venue_input" type="text" placeholder="{{ 'EVENT_VENUE_PLACEHOLDER' | translate }}"
                    formControlName="eventVenue"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.eventVenue.valid && form.controls.eventVenue.dirty">
+        <p style="font-weight: bold; color: red;">Event Venue cannot be empty!</p>
       </ion-item>
       <ion-item>
         <ion-label fixed>Type</ion-label>
@@ -64,10 +76,16 @@
           <ion-option value="others">Others</ion-option>
         </ion-select>
       </ion-item>
+      <ion-item *ngIf="!form.controls.eventType.valid && form.controls.eventType.dirty">
+        <p style="font-weight: bold; color: red;">Event Type cannot be empty!</p>
+      </ion-item>
       <ion-item>
         <ion-label fixed>Quota</ion-label>
         <ion-input type="number" placeholder="{{ 'EVENT_QUOTA_PLACEHOLDER' | translate }}"
                    formControlName="eventQuota"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.eventQuota.valid && form.controls.eventQuota.dirty">
+        <p>Event Quota cannot be empty!</p>
       </ion-item>
       <!--<ion-item>-->
       <!--<ion-label fixed>Paid Event</ion-label>-->
@@ -78,5 +96,10 @@
       <!--<ion-input type="text" placeholder="{{ 'EVENT_DESC_PLACEHOLDER' | translate }}" formControlName="desc"></ion-input>-->
       <!--</ion-item>-->
     </ion-list>
+    <div>
+      <button ion-button block (click)="done()" [disabled]="!isReadyToSave">
+        {{ 'DONE_BUTTON' | translate }}
+      </button>
+    </div>
   </form>
 </ion-content>

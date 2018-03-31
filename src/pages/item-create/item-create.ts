@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Camera, CameraOptions} from '@ionic-native/camera';
-import {IonicPage, NavController, ViewController} from 'ionic-angular';
+import {ActionSheetController, IonicPage, NavController, ViewController} from 'ionic-angular';
 import {User} from "../../providers/providers";
 
 declare var google;
@@ -24,7 +24,8 @@ export class ItemCreatePage {
               public viewCtrl: ViewController,
               formBuilder: FormBuilder,
               public camera: Camera,
-              public user: User) {
+              public user: User,
+              public actionSheetCtrl: ActionSheetController) {
 
     // retrieve the login user profile with the user service
     let userProfile = this.user.getLoginUser();
@@ -57,29 +58,17 @@ export class ItemCreatePage {
     google.maps.event.addListener(autocomplete, 'place_changed', () => {
       // retrieve the place object for your use
       let place = autocomplete.getPlace();
+      console.log('Google API returns place object:');
+      console.log(place);
 
       // update the return address to the UI form
       this.form.patchValue({'eventVenue': place['formatted_address']});
-      console.log(place);
+
     });
   }
 
   getPicture() {
     if (Camera['installed']()) {
-      /*
-      this.camera.getPicture({
-
-        destinationType: this.camera.DestinationType.DATA_URL,
-        targetWidth: 96,
-        targetHeight: 96
-      }).then((data) => {
-        this.form.patchValue({ 'profilePic': 'data:image/jpg;base64,' + data });
-      }, (err) => {
-        alert('Unable to take photo');
-        console.error(err);
-      })
-      */
-
       const options: CameraOptions = {
         quality: 100,
         destinationType: this.camera.DestinationType.DATA_URL,
@@ -95,11 +84,52 @@ export class ItemCreatePage {
       }, (err) => {
         // Handle error
         console.error(err);
-        alert('Error encountered! Unable to take photo!');
+        // alert('Error encountered! Unable to take photo!');
       });
     } else {
       this.fileInput.nativeElement.click();
     }
+  }
+
+  // Action Sheet for taking a new photo or selecting from photo gallery
+  public showActionSheet() {
+    let actionSheet = this.actionSheetCtrl.create({
+      buttons: [{
+        text: 'Load from gallery',
+        handler: () => {
+          this.loadImage(this.camera.PictureSourceType.PHOTOLIBRARY);
+        }
+      }, {
+        text: 'Take a photo',
+        handler: () => {
+          this.loadImage(this.camera.PictureSourceType.CAMERA);
+        }
+      }, {
+        text: 'Cancel',
+        role: 'cancel'
+      }]
+    });
+    actionSheet.present();
+  }
+
+  private loadImage(selectedSourceType: number) {
+    let cameraOptions: CameraOptions = {
+      sourceType: selectedSourceType,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      quality: 100,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+    };
+    this.camera.getPicture(cameraOptions).then((imageData) => {
+      if (imageData != null) {
+        // Do with the image data what you want.
+        // imageData is either a base64 encoded string or a file URI
+        // If it's base64:
+        let base64Image = 'data:image/jpeg;base64,' + imageData;
+        this.form.patchValue({'profilePic': base64Image});
+      }
+    });
   }
 
   processWebImage(event) {

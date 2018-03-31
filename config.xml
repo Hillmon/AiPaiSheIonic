@@ -30,7 +30,7 @@
   <plugin name="cordova-plugin-statusbar" spec="^2.4.1"/>
   <plugin name="cordova-plugin-file" spec="^6.0.1"/>
   <plugin name="cordova-plugin-wechat" spec="^2.1.0">
-    <variable name="WECHATAPPID" value="i-dont-know" />
+    <variable name="WECHATAPPID" value="i-dont-know"/>
   </plugin>
   <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
     <string>need camera access to take pictures</string>
@@ -45,6 +45,6 @@
     <string>need photo library access to save pictures there</string>
   </edit-config>
     <engine name="browser" spec="^5.0.3" />
-  <engine name="ios" spec="^4.5.4"/>
   <engine name="android" spec="^7.0.0"/>
+  <engine name="ios" spec="~4.5.4"/>
 </widget>
