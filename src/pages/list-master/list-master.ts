@@ -12,6 +12,7 @@ import {Item} from '../../models/item';
 import {Items} from '../../providers/providers';
 import {Api} from "../../providers/api/api";
 import {HttpClient, HttpParams} from "@angular/common/http";
+import {SocialSharing} from '@ionic-native/social-sharing';
 
 declare var window;
 
@@ -32,7 +33,9 @@ export class ListMasterPage {
               public api: Api,
               public http: HttpClient,
               public loadingCtrl: LoadingController,
-              public toastCtrl: ToastController) {
+              public toastCtrl: ToastController,
+              private socialSharing: SocialSharing
+  ) {
   }
 
   /**
@@ -41,8 +44,8 @@ export class ListMasterPage {
   ionViewDidLoad() {
   }
 
-  ionViewCanEnter(){
-    this.currentItems=this.items.query();
+  ionViewCanEnter() {
+    this.currentItems = this.items.query();
   }
 
   /**
@@ -150,7 +153,10 @@ export class ListMasterPage {
    * Navigate to the detail page for this item.
    * Edited by Hillmon on 16/03/2018
    */
-  openItem(item: Item) {
+  openItem(item
+             :
+             Item
+  ) {
     this.navCtrl.push('ItemDetailPage', {
       item: item
     });
@@ -179,6 +185,7 @@ export class ListMasterPage {
     toast.present();
   }
 
+  /*
   wechatShare(item: Item){
     window.Wechat.isInstalled(function (installed) {
       if (!installed) {
@@ -198,7 +205,55 @@ export class ListMasterPage {
       alert("Failed: " + reason);
     });
   }
-  // convert base64 data URI (from camera or file storage) to Blob for XHR upload
+  */
+
+  // testing code by HX
+  wechatShare(item: Item) {
+    window.Wechat.isInstalled(function (installed) {
+      if (!installed) {
+        alert("Wechat not installed!");
+        return false
+      }
+      else {
+        alert("WeChat is installed!");
+      }
+    }, function (reason) {
+      alert('Failed' + reason);
+    });
+
+    /*
+    var scope = "snsapi_userinfo",
+      state = "_" + (+new Date());
+    window.Wechat.auth(scope, state, function (response) {
+      // you may use response.code to get the access token.
+      alert(JSON.stringify(response));
+    }, function (reason) {
+      alert("Failed: " + reason);
+    });
+
+    window.Wechat.share({
+      message: {
+        title: "APS Share Testing",
+        description: "This is description.",
+        thumb: "www/img/thumbnail.png",
+        mediaTagName: "TEST-TAG-001",
+        messageExt: "这是第三方带的测试字段",
+        messageAction: "<action>dotalist</action>",
+        media: {
+          type: window.Wechat.Type.LINK,
+          webpageUrl: "http://www.google.com"
+        }
+      },
+      scene: window.Wechat.Scene.TIMELINE   // share to Timeline
+    }, function () {
+      alert("Success");
+    }, function (reason) {
+      alert("Failed: " + reason);
+    });
+    */
+  }
+
+// convert base64 data URI (from camera or file storage) to Blob for XHR upload
   dataURItoBlob(dataURI, dataTYPE) {
     var binary = atob(dataURI.split(',')[1]), array = [];
     for (var i = 0; i < binary.length; i++) array.push(binary.charCodeAt(i));

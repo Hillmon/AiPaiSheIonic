@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, LoadingController, NavController, NavParams, ToastController} from 'ionic-angular';
+import {IonicPage, LoadingController, ModalController, NavController, NavParams, ToastController} from 'ionic-angular';
 
 import {Items} from '../../providers/providers';
 import {HttpClient, HttpParams} from "@angular/common/http";
@@ -17,8 +17,10 @@ export class ItemDetailPage {
   eventDateStr: string;
   eventTimeStr: string;
   loader: any;
+  isLoginUser: boolean;
   alreadyJoin: boolean;
-  btnText: string;
+  btnJoinText: string;
+  btnJoinAdhocText: string = "Join with Email";
   endpoint: string = "http://35.185.217.124:8080";
 
   // endpoint: string = "http://localhost:8080";
@@ -27,6 +29,7 @@ export class ItemDetailPage {
               navParams: NavParams,
               items: Items,
               private loadingCtrl: LoadingController,
+              public modalCtrl: ModalController,
               public http: HttpClient,
               public toastCtrl: ToastController,
               public user: User) {
@@ -94,6 +97,54 @@ export class ItemDetailPage {
     this.checkEvent();
   }
 
+  joinEventAdHoc() {
+
+    let joinEventAdhocModal = this.modalCtrl.create('JoinEventAdhocPage');
+    joinEventAdhocModal.onDidDismiss(participantData => {
+      if (participantData) {
+
+        this.presentLoading("Joining the event for you...");
+
+        // retrieve the event profile pic by the event ID
+        if (participantData['firstName'] && participantData['lastName'] && participantData['emailAddress'] && this.item['eventId']) {
+          const params = new HttpParams()
+            .set('eventId', this.item['eventId'])
+            .set('firstName', participantData['firstName'])
+            .set('lastName', participantData['lastName'])
+            .set('email', participantData['emailAddress']);
+
+          this.http.get(this.endpoint + "/eulink/createAdhoc", {params}).subscribe(data => {
+
+              console.log('[Debug] API createAdhoc Return Data: ');
+              console.log(data);
+
+              this.loader.dismissAll();
+
+              if (data)
+                this.presentToast("You have joined the event successfully");
+              else
+                this.presentToast("You email is already registered for this event!");
+
+
+              this.btnJoinAdhocText = "You have joined as " + participantData['emailAddress'];
+
+            },
+            err => {
+              this.presentToast("System Error: Join Ad-hoc Event Failed!");
+              console.error(err);
+            });
+        }
+        else {
+          this.presentToast('System Error: Event ID or User ID not found!');
+        }
+      }
+      else {
+        this.presentToast('System Error: Participant Data not Found!');
+      }
+    });
+    joinEventAdhocModal.present();
+  }
+
   joinEvent() {
 
     this.presentLoading("Joining the event for you...");
@@ -114,11 +165,11 @@ export class ItemDetailPage {
 
           this.loader.dismissAll();
           this.alreadyJoin = true;
-          this.btnText = 'You are already in!';
+          this.btnJoinText = 'You are already in!';
 
         },
         err => {
-          this.presentToast("Create event-user link error!");
+          this.presentToast("System Error: Join Event Failed!");
           console.error(err);
         });
     }
@@ -152,42 +203,46 @@ export class ItemDetailPage {
   checkEvent(): any {
     this.presentLoading("Checking the event status...");
 
+    console.info("Current event ID:" + this.item['eventId']);
+
     // retrieve the login user profile with the user service
     let userProfile = this.user.getLoginUser();
 
-    console.log("Current event ID:" + this.item['eventId']);
+    if (userProfile) {
+      this.isLoginUser = true;
+      console.info("Current login user profile:");
+      console.info(userProfile);
 
-    console.log("Current login user profile:");
-    console.log(userProfile);
+      if (userProfile['id']) {
+        console.info("Checking if the login user has joined this event...");
 
-    // retrieve the event profile pic by the event ID
-    if (this.item['eventId'] && userProfile['id']) {
-      console.log("Ready to check the status...");
+        const params = new HttpParams()
+          .set('eventId', this.item['eventId'])
+          .set('userId', userProfile['id']);
 
-      const params = new HttpParams()
-        .set('eventId', this.item['eventId'])
-        .set('userId', userProfile['id']);
+        this.http.get(this.endpoint + "/eulink/check", {params}).subscribe(data => {
 
-      this.http.get(this.endpoint + "/eulink/check", {params}).subscribe(data => {
+            this.loader.dismissAll();
 
-          this.loader.dismissAll();
-
-          if (data) {
-            this.alreadyJoin = true;
-            this.btnText = 'You are already in!';
-          }
-          else {
-            this.alreadyJoin = false;
-            this.btnText = 'Join this event!';
-          }
-        },
-        err => {
-          this.presentToast("Checking event-user link error!");
-          console.error(err);
-        });
+            if (data) {
+              this.alreadyJoin = true;
+              this.btnJoinText = 'You are already in!';
+            }
+            else {
+              this.alreadyJoin = false;
+              this.btnJoinText = 'Join this event!';
+            }
+          },
+          err => {
+            this.presentToast("Checking event-user link error!");
+            console.error(err);
+          });
+      }
     }
     else {
-      this.presentToast('Event ID or User ID not found!');
+      this.isLoginUser = false;
+      this.presentToast('Login User cannot be found! Join Event in Ad-hoc Mode.');
+      console.info("No login user can be found!");
     }
   }
 

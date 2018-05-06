@@ -1,0 +1,56 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Join Event (Ad-hoc)</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="cancel()">
+        <span color="primary" showWhen="ios">
+          {{ 'CANCEL_BUTTON' | translate }}
+        </span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <form *ngIf="form" [formGroup]="form">
+    <ion-list>
+
+      <ion-item>
+        <ion-label fixed>First Name</ion-label>
+        <ion-input type="text" placeholder="e.g. Nicole"
+                   formControlName="firstName"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.firstName.valid && form.controls.firstName.dirty">
+        <p style="font-weight: bold; color: red;">First Name cannot be empty!</p>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed>Last Name</ion-label>
+        <ion-input type="text" placeholder="e.g. Yang"
+                   formControlName="lastName"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.lastName.valid && form.controls.lastName.dirty">
+        <p style="font-weight: bold; color: red;">Last Name cannot be empty!</p>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed>Email</ion-label>
+        <ion-input type="text" placeholder="e.g. nicole.yang@email.com"
+                   formControlName="emailAddress"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.emailAddress.valid && form.controls.emailAddress.dirty">
+        <p style="font-weight: bold; color: red;">Email cannot be empty!</p>
+      </ion-item>
+
+    </ion-list>
+    <div>
+      <button ion-button block (click)="confirm()" [disabled]="!allInputDone">
+        Confirm
+      </button>
+    </div>
+  </form>
+</ion-content>
