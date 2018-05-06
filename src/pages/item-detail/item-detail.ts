@@ -46,13 +46,15 @@ export class ItemDetailPage {
 
       this.http.get(this.endpoint + "/user/get", {params}).subscribe(data => {
 
-          if (data)
+          if (data){
 
-          this.item['ownerName'] = data['lastName'] + ' ' + data['firstName'];
-
-          else
-
+            this.item['ownerName'] = data['lastName'] + ' ' + data['firstName'];
+          }
+          else{
             this.item['ownerName'] = 'Unknown User';
+
+          }
+
 
         },
         err => {

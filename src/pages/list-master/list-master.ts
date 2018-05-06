@@ -187,6 +187,11 @@ export class ListMasterPage {
 
   /*
   wechatShare(item: Item){
+    if(!window.Wechat){
+      alert("Wechat variable not defined");
+      return false
+    }
+
     window.Wechat.isInstalled(function (installed) {
       if (!installed) {
         alert("Wechat not installed");
@@ -197,7 +202,15 @@ export class ListMasterPage {
     });
 
     window.Wechat.share({
-      text: "APS Testing",
+      message: {
+        title: "Hello World!",
+        description: "This is a test/",
+        thumb: "http://www.salem-harlem.org/wp-content/uploads/2014/07/hw_01.jpg",
+        media: {
+          type: window.Wechat.Type.WEBPAGE,
+          webpageUrl: "http://35.185.217.124:8080/#!/home"
+        }
+      },
       scene: window.Wechat.Scene.TIMELINE   // share to Timeline
     }, function () {
       alert("Success");
