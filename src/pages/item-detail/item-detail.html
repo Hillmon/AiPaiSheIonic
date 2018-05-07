@@ -11,18 +11,33 @@
   <div class="item-profile" text-center #profilePic [style.background-image]="'url(' + item.profilePic + ')'"
        *ngIf="item.profilePic">
   </div>
+  <ion-list>
 
-  <div class="item-detail" padding>
-    <h2>Event Name: {{item.eventName}}</h2>
-    <p>Organizer: {{item.ownerName}}</p>
-    <p>Venue: {{item.eventVenue}}</p>
-    <p>Date: {{eventDateStr}}</p>
-    <p>Time: {{eventTimeStr}}</p>
-    <p>Event Type: {{item.eventType}}</p>
-    <p>Quota: {{item.eventQuota}}</p>
-    <!--<p>Description: {{item.eventDesc}}</p>-->
+    <ion-item>
+      <h2>Event Name: {{item.eventName}}</h2>
+      <p>Organizer: {{item.ownerName}}</p>
+      <p>Venue: {{item.eventVenue}}</p>
+      <p>Date: {{eventDateStr}}</p>
+      <p>Time: {{eventTimeStr}}</p>
+      <p>Event Type: {{item.eventType}}</p>
+      <p>Quota: {{item.eventQuota}}</p>
+      <p>Description: {{item.eventDesc}}</p>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="item.participantList">
+    <ion-list-header>
+      Participants
+    </ion-list-header>
+    <ion-item *ngFor="let participant of item.participantList">
+      <h2>{{participant.firstName}} {{participant.lastName}}</h2>
+      <p>{{participant.email}}</p>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
     <button ion-button block (click)="joinEvent()" [disabled]="alreadyJoin" [hidden]="!isLoginUser">{{btnJoinText}}
     </button>
     <button ion-button block (click)="joinEventAdHoc()" [hidden]="isLoginUser">{{btnJoinAdhocText}}</button>
-  </div>
+  </ion-list>
 </ion-content>
