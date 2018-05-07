@@ -47,7 +47,6 @@ export class ItemDetailPage {
       this.http.get(this.endpoint + "/user/get", {params}).subscribe(data => {
 
           if (data){
-
             this.item['ownerName'] = data['lastName'] + ' ' + data['firstName'];
           }
           else{
@@ -89,7 +88,21 @@ export class ItemDetailPage {
       this.presentToast('System error: event ID not found!');
     }
 
-    var date = new Date(this.item['eventDate']);
+    //retrieve participantList if any
+    if(this.item['eventId']&&this.user.getLoginUser()){
+
+      const params = new HttpParams().set('eventId', this.item['eventId'])
+        .set('userId', this.user.getLoginUser()['id'])
+
+      this.http.get("http://localhost:8080/eulink/participantList", {params}).subscribe(data=>{
+        console.log('Response from /eulink/participantList');
+        console.log(data);
+        this.item['participantList']=data;
+      })
+    }
+
+
+      var date = new Date(this.item['eventDate']);
     this.eventDateStr = format(date, 'DD/MM/YYYY');
     this.eventTimeStr = format(date, 'HH:MM');
   }
