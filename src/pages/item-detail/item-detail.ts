@@ -135,11 +135,10 @@ export class ItemDetailPage {
 
               this.loader.dismissAll();
 
-              if (data)
-                this.presentToast("You have joined the event successfully");
+              if (this.isEmpty(data))
+                this.presentToast("Your email is already registered for this event!");
               else
-                this.presentToast("You email is already registered for this event!");
-
+                this.presentToast("You have joined the event successfully");
 
               this.btnJoinAdhocText = "You have joined as " + participantData['emailAddress'];
 
@@ -259,6 +258,14 @@ export class ItemDetailPage {
       this.presentToast('Login User cannot be found! Join Event in Ad-hoc Mode.');
       console.info("No login user can be found!");
     }
+  }
+
+  isEmpty(obj) {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key))
+        return false;
+    }
+    return true;
   }
 
 }
