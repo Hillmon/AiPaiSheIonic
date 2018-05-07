@@ -153,10 +153,7 @@ export class ListMasterPage {
    * Navigate to the detail page for this item.
    * Edited by Hillmon on 16/03/2018
    */
-  openItem(item
-             :
-             Item
-  ) {
+  openItem(item: Item) {
     this.navCtrl.push('ItemDetailPage', {
       item: item
     });
@@ -185,8 +182,20 @@ export class ListMasterPage {
     toast.present();
   }
 
-  /*
   wechatShare(item: Item){
+
+    /*
+    // Testing code for WeChat Login
+    var scope = "snsapi_userinfo",
+      state = "_" + (+new Date());
+    window.Wechat.auth(scope, state, function (response) {
+      // you may use response.code to get the access token.
+      alert(JSON.stringify(response));
+    }, function (reason) {
+      alert("Failed: " + reason);
+    });
+    */
+
     window.Wechat.isInstalled(function (installed) {
       if (!installed) {
         alert("Wechat not installed");
@@ -205,52 +214,17 @@ export class ListMasterPage {
       alert("Failed: " + reason);
     });
   }
-  */
 
-  // testing code by HX
-  wechatShare(item: Item) {
-    window.Wechat.isInstalled(function (installed) {
-      if (!installed) {
-        alert("Wechat not installed!");
-        return false
-      }
-      else {
-        alert("WeChat is installed!");
-      }
-    }, function (reason) {
-      alert('Failed' + reason);
-    });
+  // use Ionic native social sharing plugin for event sharing
+  socialShare(item) {
 
-    /*
-    var scope = "snsapi_userinfo",
-      state = "_" + (+new Date());
-    window.Wechat.auth(scope, state, function (response) {
-      // you may use response.code to get the access token.
-      alert(JSON.stringify(response));
-    }, function (reason) {
-      alert("Failed: " + reason);
-    });
+    // prepare the data for social sharing
+    var message = "Here comes an exciting event from AiPaiShe!";
+    var subject = item['eventName'];
+    var file = item['profilePic'];
+    var url = "http://35.185.217.124:8080/";
 
-    window.Wechat.share({
-      message: {
-        title: "APS Share Testing",
-        description: "This is description.",
-        thumb: "www/img/thumbnail.png",
-        mediaTagName: "TEST-TAG-001",
-        messageExt: "这是第三方带的测试字段",
-        messageAction: "<action>dotalist</action>",
-        media: {
-          type: window.Wechat.Type.LINK,
-          webpageUrl: "http://www.google.com"
-        }
-      },
-      scene: window.Wechat.Scene.TIMELINE   // share to Timeline
-    }, function () {
-      alert("Success");
-    }, function (reason) {
-      alert("Failed: " + reason);
-    });
-    */
+    this.socialSharing.share(message, subject, file, url);
   }
 
 // convert base64 data URI (from camera or file storage) to Blob for XHR upload
