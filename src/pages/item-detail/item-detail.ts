@@ -94,7 +94,7 @@ export class ItemDetailPage {
       const params = new HttpParams().set('eventId', this.item['eventId'])
         .set('userId', this.user.getLoginUser()['id'])
 
-      this.http.get("http://localhost:8080/eulink/participantList", {params}).subscribe(data=>{
+      this.http.get(this.endpoint+"/eulink/participantList", {params}).subscribe(data=>{
         console.log('Response from /eulink/participantList');
         console.log(data);
         this.item['participantList']=data;
