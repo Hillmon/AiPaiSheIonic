@@ -30,12 +30,14 @@ export class ItemCreatePage {
     // retrieve the login user profile with the user service
     let userProfile = this.user.getLoginUser();
 
+    // TODO timeZone has been hard-coded as GMT+8 for current application context, need to make it versatile depend on system locale
     this.form = formBuilder.group({
       profilePic: [''],
       ownerId: [userProfile['id']],
       eventName: ['', Validators.required],
       eventDate: ['', Validators.required],
       eventTime: ['', Validators.required],
+      timeZone: ['+0800'],
       eventType: ['', Validators.required],
       eventQuota: ['10', Validators.required],
       eventVenue: ['', Validators.required]
