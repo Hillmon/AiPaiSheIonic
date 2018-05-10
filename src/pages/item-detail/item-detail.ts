@@ -94,27 +94,23 @@ export class ItemDetailPage {
     }
 
     //retrieve participantList if any
-    if (this.item['eventId'] && this.user.getLoginUser()) {
+    if(this.item['eventId']&&this.user.getLoginUser()){
 
       const params = new HttpParams().set('eventId', this.item['eventId'])
-        .set('userId', this.user.getLoginUser()['id'])
+        .set('userId', this.user.getLoginUser()['id']);
 
-      this.http.get(this.endpoint + "/eulink/participantList", {params}).subscribe(data => {
-          console.log('Response from /eulink/participantList');
-          console.log(data);
-
-          this.item['participantList'] = data;
-        }, err => {
-          this.presentToast("Retrieve participant list error!");
-          console.warn(err);
-        }
-      )
+      this.http.get(this.endpoint+"/eulink/participantList", {params}).subscribe(data=>{
+        console.log('Response from /eulink/participantList');
+        console.log(data);
+        this.item['participantList']=data;
+      })
     }
 
 
+    //TODO bug is found here, if the eventDate is retrieved from get-all method, it is a long date, if it is passed from create event page, it is just a date string.
     var date = new Date(this.item['eventDate']);
     this.eventDateStr = format(date, 'DD/MM/YYYY');
-    this.eventTimeStr = format(date, 'HH:MM');
+    this.eventTimeStr = format(date, 'hh:mm A');
   }
 
   ionViewDidLoad() {

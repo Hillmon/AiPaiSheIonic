@@ -13,6 +13,7 @@ import {Items} from '../../providers/providers';
 import {Api} from "../../providers/api/api";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {SocialSharing} from '@ionic-native/social-sharing';
+import {User} from "../../providers/user/user";
 
 declare var window;
 
@@ -26,6 +27,8 @@ export class ListMasterPage {
 
   currentItems: Item[];
 
+  isLoginUser: boolean;
+
   constructor(public navCtrl: NavController,
               public items: Items,
               public modalCtrl: ModalController,
@@ -34,7 +37,8 @@ export class ListMasterPage {
               public http: HttpClient,
               public loadingCtrl: LoadingController,
               public toastCtrl: ToastController,
-              private socialSharing: SocialSharing
+              private socialSharing: SocialSharing,
+              private user: User
   ) {
   }
 
@@ -46,6 +50,12 @@ export class ListMasterPage {
 
   ionViewCanEnter() {
     this.currentItems = this.items.query();
+
+    let userProfile = this.user.getLoginUser();
+    if (userProfile)
+      this.isLoginUser = true;
+    else
+      this.isLoginUser = false;
   }
 
   /**
@@ -97,7 +107,9 @@ export class ListMasterPage {
             });
           },
           err => {
-            console.warn("Create event error: " + err);
+            loader.dismiss();
+
+            console.error("Create event error: " + err);
             this.presentToast('Event cannot be created! Please contact Aipaishe development team!');
           });
       }
