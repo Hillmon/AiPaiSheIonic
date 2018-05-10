@@ -6,6 +6,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 
 import {format} from 'date-fns';
 import {User} from "../../providers/user/user";
+import {MainPage} from "../pages";
 
 @IonicPage()
 @Component({
@@ -23,8 +24,6 @@ export class ItemDetailPage {
   btnJoinAdhocText: string = "Join with Email";
   endpoint: string = "http://35.185.217.124:8080";
 
-  // endpoint: string = "http://localhost:8080";
-
   constructor(public navCtrl: NavController,
               navParams: NavParams,
               items: Items,
@@ -34,6 +33,12 @@ export class ItemDetailPage {
               public toastCtrl: ToastController,
               public user: User) {
     this.item = navParams.get('item') || items.defaultItem;
+
+    //item is null, redirect to list master
+    if (this.item == items.defaultItem) {
+      console.log("item is null, navigating to item list page");
+      this.navCtrl.push(MainPage);
+    }
 
     for (let param in this.item) {
       console.log('[Debug] Item property found: ' + param + " = " + this.item[param]);
@@ -46,10 +51,10 @@ export class ItemDetailPage {
 
       this.http.get(this.endpoint + "/user/get", {params}).subscribe(data => {
 
-          if (data){
+          if (data) {
             this.item['ownerName'] = data['lastName'] + ' ' + data['firstName'];
           }
-          else{
+          else {
             this.item['ownerName'] = 'Unknown User';
 
           }
@@ -89,20 +94,25 @@ export class ItemDetailPage {
     }
 
     //retrieve participantList if any
-    if(this.item['eventId']&&this.user.getLoginUser()){
+    if (this.item['eventId'] && this.user.getLoginUser()) {
 
       const params = new HttpParams().set('eventId', this.item['eventId'])
         .set('userId', this.user.getLoginUser()['id'])
 
-      this.http.get(this.endpoint+"/eulink/participantList", {params}).subscribe(data=>{
-        console.log('Response from /eulink/participantList');
-        console.log(data);
-        this.item['participantList']=data;
-      })
+      this.http.get(this.endpoint + "/eulink/participantList", {params}).subscribe(data => {
+          console.log('Response from /eulink/participantList');
+          console.log(data);
+
+          this.item['participantList'] = data;
+        }, err => {
+          this.presentToast("Retrieve participant list error!");
+          console.warn(err);
+        }
+      )
     }
 
 
-      var date = new Date(this.item['eventDate']);
+    var date = new Date(this.item['eventDate']);
     this.eventDateStr = format(date, 'DD/MM/YYYY');
     this.eventTimeStr = format(date, 'HH:MM');
   }
