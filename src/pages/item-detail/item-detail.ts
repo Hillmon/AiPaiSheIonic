@@ -119,7 +119,6 @@ export class ItemDetailPage {
   }
 
   joinEventAdHoc() {
-
     let joinEventAdhocModal = this.modalCtrl.create('JoinEventAdhocPage');
     joinEventAdhocModal.onDidDismiss(participantData => {
       if (participantData) {
@@ -132,7 +131,9 @@ export class ItemDetailPage {
             .set('eventId', this.item['eventId'])
             .set('firstName', participantData['firstName'])
             .set('lastName', participantData['lastName'])
-            .set('email', participantData['emailAddress']);
+            .set('email', participantData['emailAddress'])
+            .set('phoneNo', participantData['phoneNo'])
+          ;
 
           this.http.get(this.api.url + '/eulink/createAdhoc', {params}).subscribe(data => {
 
@@ -141,10 +142,11 @@ export class ItemDetailPage {
 
               this.loader.dismissAll();
 
-              if (this.isEmpty(data))
+              if (this.isEmpty(data)){
                 this.presentToast("Your email is already registered for this event!");
-              else
+              } else{
                 this.presentToast("You have joined the event successfully");
+              }
 
               this.btnJoinAdhocText = "You have joined as " + participantData['emailAddress'];
 
@@ -274,4 +276,7 @@ export class ItemDetailPage {
     return true;
   }
 
+  isDefined(obj){
+    return typeof obj!=="undefined";
+  }
 }

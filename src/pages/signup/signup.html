@@ -26,6 +26,11 @@
         <ion-input type="email" [(ngModel)]="account.email" formControlName="email" name="email"></ion-input>
       </ion-item>
 
+     <ion-item>
+        <ion-label fixed text-wrap>{{ 'Phone Number' | translate }}</ion-label>
+        <ion-input type="text" [(ngModel)]="account.phoneNo" formControlName="phoneNo" name="phoneNo"></ion-input>
+      </ion-item>
+
       <ion-item>
         <ion-label fixed>{{ 'Password' | translate }}</ion-label>
         <ion-input type="password" [(ngModel)]="account.password" formControlName="password"

@@ -25,7 +25,7 @@
     </ion-item>
   </ion-list>
 
-  <ion-list *ngIf="(item.participantList|json)!='{}'">
+  <ion-list *ngIf="(isDefined(item.participantList))&&(item.participantList|json)!='{}'">
     <ion-list-header>
       Participants
     </ion-list-header>

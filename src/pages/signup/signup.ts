@@ -23,6 +23,7 @@ export class SignupPage {
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required]),
+      phoneNo: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
       confirmPassword: new FormControl('', [Validators.required, this.equalto("password")]),
     })
@@ -30,10 +31,11 @@ export class SignupPage {
   // The account fields for the login form.
   // If you're using the username field with or without email, make
   // sure to add it to the type
-  account: { firstName: string, lastName: string, email: string, password: string, confirmPassword: string } = {
+  account: { firstName: string, lastName: string, email: string, phoneNo: string, password: string, confirmPassword: string } = {
     firstName: '',
     lastName: '',
     email: '',
+    phoneNo: '',
     password: '',
     confirmPassword: ''
   };
