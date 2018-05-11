@@ -8,8 +8,8 @@ import {Injectable} from '@angular/core';
 export class Api {
   // Parameter configuration for endpoint URL for local testing of GCP cloud
 
-  // url: string = 'http://35.185.217.124:8080';
-  url: string = 'http://localhost:8080';
+  url: string = 'http://35.185.217.124:8080';
+  // url: string = 'http://localhost:8080';
 
   constructor(public http: HttpClient) {
   }
