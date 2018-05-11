@@ -39,11 +39,20 @@
 
       <ion-item>
         <ion-label fixed>Email</ion-label>
-        <ion-input type="text" placeholder="e.g. nicole.yang@email.com"
+        <ion-input type="email" placeholder="e.g. nicole.yang@email.com"
                    formControlName="emailAddress"></ion-input>
       </ion-item>
       <ion-item *ngIf="!form.controls.emailAddress.valid && form.controls.emailAddress.dirty">
         <p style="font-weight: bold; color: red;">Email cannot be empty!</p>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed>Mobile No.</ion-label>
+        <ion-input type="text" placeholder=""
+                   formControlName="phoneNo"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.phoneNo.valid && form.controls.phoneNo.dirty">
+        <p style="font-weight: bold; color: red;">Mobile No. cannot be empty!</p>
       </ion-item>
 
     </ion-list>

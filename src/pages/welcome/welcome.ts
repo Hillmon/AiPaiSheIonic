@@ -4,6 +4,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {MainPage} from '../pages';
 import {User} from '../../providers/providers';
+import {Api} from "../../providers/api/api";
 
 /**
  * The Welcome Page is a splash page that quickly describes the app,
@@ -25,7 +26,8 @@ export class WelcomePage {
               public httpClient: HttpClient,
               public loadingCtrl: LoadingController,
               public alertCtrl: AlertController,
-              public user: User) {
+              public user: User,
+              public api: Api) {
   }
 
   login() {
@@ -53,7 +55,7 @@ export class WelcomePage {
       .set('email', this.email)
       .set('password', this.password);
 
-    this.httpClient.get('http://35.185.217.124:8080/user/login', {params}).subscribe(data => {
+    this.httpClient.get(this.api.url + '/user/login', {params}).subscribe(data => {
           console.log('login result: ', data);
 
           // set the login user profile with the user service

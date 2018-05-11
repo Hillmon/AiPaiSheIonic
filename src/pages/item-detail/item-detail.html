@@ -15,13 +15,13 @@
 
     <ion-item>
       <h2>Event Name: {{item.eventName}}</h2>
-      <p>Organizer: {{item.ownerName}}</p>
+      <p>Organizer: {{item.ownerName}} (Mobile: {{item.ownerPhoneNo}} )</p>
       <p>Venue: {{item.eventVenue}}</p>
       <p>Date: {{eventDateStr}}</p>
       <p>Time: {{eventTimeStr}}</p>
       <p>Event Type: {{item.eventType}}</p>
       <p>Quota: {{item.eventQuota}}</p>
-      <!--<p>Description: {{item.eventDesc}}</p>-->
+      <p>Price: HKD {{item.eventFeeAmt}}</p>
     </ion-item>
   </ion-list>
 

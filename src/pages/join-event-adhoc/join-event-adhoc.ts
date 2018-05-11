@@ -23,7 +23,8 @@ export class JoinEventAdhocPage {
     this.form = formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      emailAddress: ['', Validators.required]
+      emailAddress: ['', Validators.required],
+      phoneNo: ['', Validators.required]
     });
 
     // Watch the form for changes, and

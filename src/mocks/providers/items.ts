@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Item} from '../../models/item';
+import {Api} from "../../providers/api/api";
 
 @Injectable()
 export class Items {
@@ -11,7 +12,8 @@ export class Items {
   };
 
 
-  constructor(public httpClient: HttpClient) {
+  constructor(public httpClient: HttpClient,
+              public api: Api) {
 
   }
 
@@ -24,7 +26,7 @@ export class Items {
       }
     ];
 
-    let eventsRequest = this.httpClient.get('http://35.185.217.124:8080/event/get-all');
+    let eventsRequest = this.httpClient.get(this.api.url + '/event/get-all');
 
     eventsRequest
       .subscribe(data => {
@@ -42,7 +44,7 @@ export class Items {
               .set('fileType', 'poster');
 
             // console.log("Retrieving posters request "+posterRequestParams);
-            this.httpClient.get('http://35.185.217.124:8080/file/load', {params: posterRequestParams}).subscribe(data => {
+            this.httpClient.get(this.api.url + '/file/load', {params: posterRequestParams}).subscribe(data => {
                 if (data[0]) {
                   item['profilePic'] = data[0]['location'];
                 }

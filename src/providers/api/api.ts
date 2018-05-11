@@ -1,13 +1,15 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 
 /**
  * Api is a generic REST Api handler. Set your API url first.
  */
 @Injectable()
 export class Api {
-  // url: string = 'https://example.com/api/v1';
-  url: string = 'http://35.185.217.124:8080';
+  // Parameter configuration for endpoint URL for local testing of GCP cloud
+
+  // url: string = 'http://35.185.217.124:8080';
+  url: string = 'http://localhost:8080';
 
   constructor(public http: HttpClient) {
   }

@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import {Component} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 import {AlertController, IonicPage, LoadingController, NavController, ToastController} from 'ionic-angular';
 
-import { User } from '../../providers/providers';
+import {User} from '../../providers/providers';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {FirstRunPage} from "../pages";
 import {AbstractControl, FormControl, FormGroup, ValidatorFn, Validators} from "@angular/forms";
+import {Api} from "../../providers/api/api";
 
 @IonicPage()
 @Component({
@@ -41,12 +42,13 @@ export class SignupPage {
   // private signupErrorString: string;
 
   constructor(public navCtrl: NavController,
-    public user: User,
-    public toastCtrl: ToastController,
-    public translateService: TranslateService,
+              public user: User,
+              public toastCtrl: ToastController,
+              public translateService: TranslateService,
               public httpClient: HttpClient,
               public loadingCtrl: LoadingController,
-              public alertCtrl: AlertController) {
+              public alertCtrl: AlertController,
+              public api: Api) {
 
     this.translateService.get('SIGNUP_ERROR').subscribe((value) => {
       // this.signupErrorString = value;
@@ -65,7 +67,7 @@ export class SignupPage {
     let alert = this.alertCtrl.create({title: 'Signup Failed',
       subTitle: 'Please check and try again',
       buttons: ['Dismiss']});
-    this.users = this.httpClient.post('http://35.185.217.124:8080/user/registration', this.account);
+    this.users = this.httpClient.post(this.api.url + '/user/registration', this.account);
     this.users
       .subscribe(data => {
           console.log('Signup result: ', data);

@@ -7,6 +7,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {format} from 'date-fns';
 import {User} from "../../providers/user/user";
 import {MainPage} from "../pages";
+import {Api} from "../../providers/api/api";
 
 @IonicPage()
 @Component({
@@ -22,7 +23,6 @@ export class ItemDetailPage {
   alreadyJoin: boolean;
   btnJoinText: string;
   btnJoinAdhocText: string = "Join with Email";
-  endpoint: string = "http://35.185.217.124:8080";
 
   constructor(public navCtrl: NavController,
               navParams: NavParams,
@@ -31,7 +31,8 @@ export class ItemDetailPage {
               public modalCtrl: ModalController,
               public http: HttpClient,
               public toastCtrl: ToastController,
-              public user: User) {
+              public user: User,
+              public api: Api) {
     this.item = navParams.get('item') || items.defaultItem;
 
     //item is null, redirect to list master
@@ -49,16 +50,15 @@ export class ItemDetailPage {
       const params = new HttpParams()
         .set('id', this.item['ownerId']);
 
-      this.http.get(this.endpoint + "/user/get", {params}).subscribe(data => {
+      this.http.get(this.api.url + '/user/get', {params}).subscribe(data => {
 
           if (data) {
             this.item['ownerName'] = data['lastName'] + ' ' + data['firstName'];
-          }
-          else {
+            this.item['ownerPhoneNo'] = data['phoneNo'];
+          } else {
             this.item['ownerName'] = 'Unknown User';
-
+            this.item['ownerPhoneNo'] = 'N/A';
           }
-
 
         },
         err => {
@@ -76,7 +76,7 @@ export class ItemDetailPage {
         .set('eventId', this.item['eventId'])
         .set('fileType', 'poster');
 
-      this.http.get(this.endpoint + "/file/load", {params}).subscribe(data => {
+      this.http.get(this.api.url + '/file/load', {params}).subscribe(data => {
 
           console.log('Return Data: ');
           console.log(data);
@@ -94,15 +94,15 @@ export class ItemDetailPage {
     }
 
     //retrieve participantList if any
-    if(this.item['eventId']&&this.user.getLoginUser()){
+    if (this.item['eventId'] && this.user.getLoginUser()) {
 
       const params = new HttpParams().set('eventId', this.item['eventId'])
         .set('userId', this.user.getLoginUser()['id']);
 
-      this.http.get(this.endpoint+"/eulink/participantList", {params}).subscribe(data=>{
+      this.http.get(this.api.url + '/eulink/participantList', {params}).subscribe(data => {
         console.log('Response from /eulink/participantList');
         console.log(data);
-        this.item['participantList']=data;
+        this.item['participantList'] = data;
       })
     }
 
@@ -134,7 +134,7 @@ export class ItemDetailPage {
             .set('lastName', participantData['lastName'])
             .set('email', participantData['emailAddress']);
 
-          this.http.get(this.endpoint + "/eulink/createAdhoc", {params}).subscribe(data => {
+          this.http.get(this.api.url + '/eulink/createAdhoc', {params}).subscribe(data => {
 
               console.log('[Debug] API createAdhoc Return Data: ');
               console.log(data);
@@ -178,7 +178,7 @@ export class ItemDetailPage {
         .set('eventId', this.item['eventId'])
         .set('userId', userProfile['id']);
 
-      this.http.get(this.endpoint + "/eulink/create", {params}).subscribe(data => {
+      this.http.get(this.api.url + '/eulink/create', {params}).subscribe(data => {
 
           console.log('Return Data: ');
           console.log(data);
@@ -240,7 +240,7 @@ export class ItemDetailPage {
           .set('eventId', this.item['eventId'])
           .set('userId', userProfile['id']);
 
-        this.http.get(this.endpoint + "/eulink/check", {params}).subscribe(data => {
+        this.http.get(this.api.url + '/eulink/check', {params}).subscribe(data => {
 
             this.loader.dismissAll();
 

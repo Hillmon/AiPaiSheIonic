@@ -86,7 +86,7 @@ export class ListMasterPage {
           .set('quota', item['eventQuota']);
 
         // create a new event via REST API
-        this.http.get("http://35.185.217.124:8080/event/create", {params}).subscribe(data => {
+        this.http.get(this.api.url + "/event/create", {params}).subscribe(data => {
             console.log('Create event database record result: ', data);
 
             if (item['profilePic']) {
@@ -118,7 +118,7 @@ export class ListMasterPage {
   }
 
   uploadFile(imgUri: any, eventId: any) {
-    let apiUrl = "http://35.185.217.124:8080/upload2cloud";
+    let apiUrl = this.api.url + '/upload2cloud';
 
     const formData = new FormData();
 
@@ -234,7 +234,7 @@ export class ListMasterPage {
     var message = "Here comes an exciting event from AiPaiShe!";
     var subject = item['eventName'];
     var file = item['profilePic'];
-    var url = "http://35.185.217.124:8080/";
+    var url = this.api.url;
 
     this.socialSharing.share(message, subject, file, url);
   }
