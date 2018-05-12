@@ -45,7 +45,8 @@
     <variable name="WECHATAPPID" value="wxb6c7b7311e231c0e"/>
   </plugin>
   <plugin name="cordova-plugin-x-socialsharing" spec="^5.4.0"/>
-  <engine name="ios" spec="~4.5.4"/>
-  <engine name="browser" spec="~5.0.3"/>
-  <engine name="android" spec="~7.0.0"/>
+  <plugin name="cordova-sqlite-storage" spec="^2.3.1"/>
+  <engine name="ios" spec="^4.5.4"/>
+  <engine name="browser" spec="^5.0.3"/>
+  <engine name="android" spec="^7.0.0"/>
 </widget>

@@ -83,7 +83,8 @@ export class ListMasterPage {
           .set('name', item['eventName'])
           .set('venue', item['eventVenue'])
           .set('type', item['eventType'])
-          .set('quota', item['eventQuota']);
+          .set('quota', item['eventQuota'])
+          .set('fee', item['eventFeeAmt']);
 
         // create a new event via REST API
         this.http.get(this.api.url + "/event/create", {params}).subscribe(data => {

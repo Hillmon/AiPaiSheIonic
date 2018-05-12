@@ -244,7 +244,7 @@ export class ItemDetailPage {
 
         this.http.get(this.api.url + '/eulink/check', {params}).subscribe(data => {
 
-            this.loader.dismissAll();
+            this.loader.dismiss();
 
             if (data) {
               this.alreadyJoin = true;
@@ -256,12 +256,14 @@ export class ItemDetailPage {
             }
           },
           err => {
+            this.loader.dismiss();
             this.presentToast("Checking event-user link error!");
             console.error(err);
           });
       }
     }
     else {
+      this.loader.dismiss();
       this.isLoginUser = false;
       this.presentToast('Login User cannot be found! Join Event in Ad-hoc Mode.');
       console.info("No login user can be found!");

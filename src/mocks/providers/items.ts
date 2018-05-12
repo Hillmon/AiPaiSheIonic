@@ -63,8 +63,9 @@ export class Items {
           }
         },
         err => {
-          let errJson = JSON.parse(err.error);
-          console.log('Error occurred: ' + errJson);
+          // let errJson = JSON.parse(err.error);
+          console.error(err);
+          alert('Cannot connect to server!');
         });
 
     if (!params) {

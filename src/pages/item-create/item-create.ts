@@ -40,6 +40,7 @@ export class ItemCreatePage {
       timeZone: ['+0800'],
       eventType: ['', Validators.required],
       eventQuota: ['10', Validators.required],
+      eventFeeAmt: ['0.00', Validators.required],
       eventVenue: ['', Validators.required]
     });
 

@@ -15,6 +15,8 @@
     <ion-input style="width: 70%;display: inline-block;border-bottom-width: 0.55px;border-bottom-style: solid;border-bottom-color: rgb(200, 199, 204)" placeholder="Email" type="text" [(ngModel)]="email" name="email"></ion-input>
     <ion-input style="width: 70%;display: inline-block;border-bottom-width: 0.55px;border-bottom-style: solid;border-bottom-color: rgb(200, 199, 204)" placeholder="Password" type="password" [(ngModel)]="password" name="password"></ion-input>
     <button style="width: 70%;display: inline-block" ion-button block (click)="login()">{{ 'Login' | translate }}</button>
+    <button style="width: 70%;display: inline-block" ion-button block (click)="welcomeGuest()">Continue as Guest
+    </button>
     <button style="width: 70%;display: inline-block;background-color: white;margin-top: 1em" (click)="signup()">{{ 'Create New Account' | translate }}</button>
   </div>
 </ion-content>

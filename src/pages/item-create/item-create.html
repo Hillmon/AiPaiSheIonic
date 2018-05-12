@@ -87,6 +87,14 @@
       <ion-item *ngIf="!form.controls.eventQuota.valid && form.controls.eventQuota.dirty">
         <p>Event Quota cannot be empty!</p>
       </ion-item>
+      <ion-item>
+        <ion-label fixed>Fee</ion-label>
+        <ion-input type="number" placeholder="{{ 'EVENT_FEE_PLACEHOLDER' | translate }}"
+                   formControlName="eventFeeAmt"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!form.controls.eventFeeAmt.valid && form.controls.eventFeeAmt.dirty">
+        <p>Event Fee cannot be empty!</p>
+      </ion-item>
       <!--<ion-item>-->
       <!--<ion-label fixed>Paid Event</ion-label>-->
       <!--<ion-toggle formControlName="paid"></ion-toggle>-->

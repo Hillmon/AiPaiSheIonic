@@ -88,4 +88,9 @@ export class WelcomePage {
     // direct to the page for signup
     this.navCtrl.push('SignupPage');
   }
+
+  welcomeGuest() {
+    // direct to the list master page
+    this.navCtrl.push('ListMasterPage');
+  }
 }
