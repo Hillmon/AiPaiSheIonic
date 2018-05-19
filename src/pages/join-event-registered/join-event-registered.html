@@ -1,0 +1,35 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Join Event</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="cancel()">
+        <span color="primary" showWhen="ios">
+          {{ 'CANCEL_BUTTON' | translate }}
+        </span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <form *ngIf="form" [formGroup]="form">
+    <ion-list>
+
+      <ion-item>
+        <ion-label fixed>Remarks</ion-label>
+        <ion-input type="text" placeholder="anything want to tell the organizer?"
+                   formControlName="remarks"></ion-input>
+      </ion-item>
+
+    <div>
+      <button ion-button block (click)="confirm()">
+        Confirm
+      </button>
+    </div>
+    </ion-list>
+  </form>
+</ion-content>

@@ -32,6 +32,7 @@
     <ion-item *ngFor="let participant of item.participantList">
       <h2>{{participant.firstName}} {{participant.lastName}}</h2>
       <p>{{participant.email}}</p>
+      <p *ngIf="isNotEmptyString(participant.remarks)">Remarks: {{participant.remarks}}</p>
     </ion-item>
   </ion-list>
 

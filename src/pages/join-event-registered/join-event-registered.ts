@@ -5,12 +5,10 @@ import {IonicPage, NavController, ViewController} from 'ionic-angular';
 @IonicPage()
 @Component({
   selector: 'page-join-event-adhoc',
-  templateUrl: 'join-event-adhoc.html'
+  templateUrl: 'join-event-registered.html'
 })
-export class JoinEventAdhocPage {
+export class JoinEventRegisteredUserPage {
   @ViewChild('fileInput') fileInput;
-
-  allInputDone: boolean;
 
   item: any;
 
@@ -21,17 +19,9 @@ export class JoinEventAdhocPage {
               formBuilder: FormBuilder) {
 
     this.form = formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      emailAddress: ['', Validators.required],
-      phoneNo: ['', Validators.required],
       remarks: ['', Validators.maxLength(256)]
     });
 
-    // Watch the form for changes, and
-    this.form.valueChanges.subscribe((v) => {
-      this.allInputDone = this.form.valid;
-    });
   }
 
   ionViewDidLoad() {

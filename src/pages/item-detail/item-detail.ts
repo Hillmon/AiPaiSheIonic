@@ -71,8 +71,7 @@ export class ItemDetailPage {
           this.presentToast("Retrieve poster image error!");
           console.warn(err);
         });
-    }
-    else {
+    } else {
       this.presentToast('System error: event ID not found!');
     }
 
@@ -169,18 +168,19 @@ export class ItemDetailPage {
             .set('lastName', participantData['lastName'])
             .set('email', participantData['emailAddress'])
             .set('phoneNo', participantData['phoneNo'])
+            .set('remarks', participantData['remarks'])
           ;
 
           this.http.get(this.api.url + '/eulink/createAdhoc', {params}).subscribe(data => {
 
-              console.log('[Debug] API createAdhoc Return Data: ');
-              console.log(data);
+              // console.log('[Debug] API createAdhoc Return Data: ');
+              // console.log(data);
 
               this.loader.dismissAll();
 
-              if (this.isEmpty(data)){
+              if (this.isEmpty(data)) {
                 this.presentToast("Your email is already registered for this event!");
-              } else{
+              } else {
                 this.presentToast("You have joined the event successfully");
               }
 
@@ -204,36 +204,42 @@ export class ItemDetailPage {
   }
 
   joinEvent() {
+    let joinEventRemarksModal = this.modalCtrl.create('JoinEventRegisteredUserPage');
 
-    this.presentLoading("Joining the event for you...");
+    joinEventRemarksModal.onDidDismiss(remarks => {
+        this.presentLoading("Joining the event for you...");
 
-    // retrieve the login user profile with the user service
-    let userProfile = this.user.getLoginUser();
+        // retrieve the login user profile with the user service
+        let userProfile = this.user.getLoginUser();
 
-    // retrieve the event profile pic by the event ID
-    if (this.eventId && userProfile['id']) {
-      const params = new HttpParams()
-        .set('eventId', this.eventId)
-        .set('userId', userProfile['id']);
+        // retrieve the event profile pic by the event ID
+        if (this.eventId && userProfile['id']) {
+          const params = new HttpParams()
+            .set('eventId', this.item.eventId)
+            .set('userId', userProfile['id'])
+            .set('remarks', remarks['remarks']);
 
-      this.http.get(this.api.url + '/eulink/create', {params}).subscribe(data => {
+          this.http.get(this.api.url + '/eulink/create', {params}).subscribe(data => {
 
-          console.log('Return Data: ');
-          console.log(data);
+              console.log('Return Data: ');
+              console.log(data);
 
-          this.loader.dismissAll();
-          this.alreadyJoin = true;
-          this.btnJoinText = 'You are already in!';
+              this.loader.dismissAll();
+              this.alreadyJoin = true;
+              this.btnJoinText = 'You are already in!';
 
-        },
-        err => {
-          this.presentToast("System Error: Join Event Failed!");
-          console.error(err);
-        });
-    }
-    else {
-      this.presentToast('Event ID or User ID not found!');
-    }
+            },
+            err => {
+              this.presentToast("System Error: Join Event Failed!");
+              console.error(err);
+            });
+        } else {
+          this.presentToast('Event ID or User ID not found!');
+        }
+      }
+    );
+    joinEventRemarksModal.present();
+
   }
 
   presentLoading(msg) {
@@ -314,7 +320,11 @@ export class ItemDetailPage {
     return true;
   }
 
-  isDefined(obj){
-    return typeof obj!=="undefined";
+  isDefined(obj) {
+    return typeof obj !== "undefined";
+  }
+
+  isNotEmptyString(obj){
+    return obj!=null&&obj!="";
   }
 }

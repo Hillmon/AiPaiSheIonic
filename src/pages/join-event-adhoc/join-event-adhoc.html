@@ -54,6 +54,11 @@
       <ion-item *ngIf="!form.controls.phoneNo.valid && form.controls.phoneNo.dirty">
         <p style="font-weight: bold; color: red;">Mobile No. cannot be empty!</p>
       </ion-item>
+      <ion-item>
+        <ion-label fixed>Remarks</ion-label>
+        <ion-input type="text" placeholder=""
+                   formControlName="remarks"></ion-input>
+      </ion-item>
 
     </ion-list>
     <div>
