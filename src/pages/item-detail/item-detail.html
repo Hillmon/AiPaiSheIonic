@@ -20,8 +20,9 @@
       <p>Date: {{eventDateStr}}</p>
       <p>Time: {{eventTimeStr}}</p>
       <p>Event Type: {{item.eventType}}</p>
-      <p>Quota: {{item.eventQuota}}</p>
       <p>Price: HKD {{item.eventFeeAmt}}</p>
+      <p>Quota: {{item.eventQuota}}</p>
+      <p>Place(s) Remaining: {{item.remainingPlace}}</p>
     </ion-item>
   </ion-list>
 
@@ -32,6 +33,7 @@
     <ion-item *ngFor="let participant of item.participantList">
       <h2>{{participant.firstName}} {{participant.lastName}}</h2>
       <p>{{participant.email}}</p>
+      <p>{{participant.phoneNo}}</p>
       <p *ngIf="isNotEmptyString(participant.remarks)">Remarks: {{participant.remarks}}</p>
     </ion-item>
   </ion-list>

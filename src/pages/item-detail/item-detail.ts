@@ -61,7 +61,7 @@ export class ItemDetailPage {
 
       this.http.get(this.api.url + '/file/load', {params}).subscribe(data => {
 
-          console.log('Return Data: ');
+          console.log('Return Data from /file/load: ');
           console.log(data);
           if (data[0]) {
             this.item['profilePic'] = data[0]['location'];
@@ -69,6 +69,27 @@ export class ItemDetailPage {
         },
         err => {
           this.presentToast("Retrieve poster image error!");
+          console.warn(err);
+        });
+    } else {
+      this.presentToast('System error: event ID not found!');
+    }
+
+    // retrieve the event profile pic by the event ID
+    if (this.eventId) {
+      const params = new HttpParams()
+        .set('id', this.eventId);
+
+      this.http.get(this.api.url + '/event/get/remaining', {params}).subscribe(data => {
+
+          console.log('Return Data from /event/remaining: ');
+          console.log(data);
+          if (data) {
+            this.item['remainingPlace'] = data;
+          }
+        },
+        err => {
+          this.presentToast("Retrieve remaining place error!");
           console.warn(err);
         });
     } else {
@@ -83,10 +104,14 @@ export class ItemDetailPage {
         .set('userId', this.user.getLoginUser()['id']);
 
       this.http.get(this.api.url + '/eulink/participantList', {params}).subscribe(data => {
-        console.log('Response from /eulink/participantList');
-        console.log(data);
-        this.item['participantList'] = data;
-      })
+          console.log('Response from /eulink/participantList');
+          console.log(data);
+          this.item['participantList'] = data;
+        },
+        err => {
+          this.presentToast("Retrieve participant list error!");
+          console.warn(err);
+        });
     }
 
   }
@@ -324,7 +349,7 @@ export class ItemDetailPage {
     return typeof obj !== "undefined";
   }
 
-  isNotEmptyString(obj){
-    return obj!=null&&obj!="";
+  isNotEmptyString(obj) {
+    return obj != null && obj != "";
   }
 }
