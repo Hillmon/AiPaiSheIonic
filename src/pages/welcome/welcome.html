@@ -1,9 +1,10 @@
 <ion-content>
   <div style="height: 50%;" text-center>
-  <video preload="auto" loop="loop" id="pretzel-video" class="video-playing" autoplay height="100%" webkit-playsinline>
-    <source src="https://a0.muscache.com/airbnb/static/P1-background-vid-compressed-2.mp4" type="video/mp4">
-    <source src="https://a0.muscache.com/airbnb/static/P1-background-vid-compressed-2.webm" type="video/webm">
-  </video>
+    <!--video preload="auto" loop="loop" id="pretzel-video" class="video-playing" autoplay height="100%" webkit-playsinline>
+      <source src="https://a0.muscache.com/airbnb/static/P1-background-vid-compressed-2.mp4" type="video/mp4">
+      <source src="https://a0.muscache.com/airbnb/static/P1-background-vid-compressed-2.webm" type="video/webm">
+    </video-->
+    <img src="https://storage.googleapis.com/aipaishe/Awakened_Fitness_Welcome.jpeg">
   </div>
   <div class="splash-info">
     <div class="splash-logo"></div>
@@ -17,6 +18,8 @@
     <button style="width: 70%;display: inline-block" ion-button block (click)="login()">{{ 'Login' | translate }}</button>
     <button style="width: 70%;display: inline-block" ion-button block (click)="welcomeGuest()">Continue as Guest
     </button>
-    <button style="width: 70%;display: inline-block;background-color: white;margin-top: 1em" (click)="signup()">{{ 'Create New Account' | translate }}</button>
+    <button style="width: 70%;display: inline-block;background-color: white;margin-top: 1em" (click)="signup()"
+            *ngIf="false">{{ 'Create New Account' | translate }}
+    </button>
   </div>
 </ion-content>

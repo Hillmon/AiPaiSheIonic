@@ -168,7 +168,8 @@ export class ListMasterPage {
    */
   openItem(item: Item) {
     this.navCtrl.push('ItemDetailPage', {
-      item: item
+      // item: item,
+      eventId: item['eventId']
     });
   }
 
@@ -232,15 +233,15 @@ export class ListMasterPage {
   socialShare(item) {
 
     // prepare the data for social sharing
-    var message = "Here comes an exciting event from AiPaiShe!";
+    var message = "Join this event on EventGou!";
     var subject = item['eventName'];
     var file = item['profilePic'];
-    var url = this.api.url;
+    var url = 'http://www.eventgou.com/#/item-detail/' + item['eventId'];
 
     this.socialSharing.share(message, subject, file, url);
   }
 
-// convert base64 data URI (from camera or file storage) to Blob for XHR upload
+  // convert base64 data URI (from camera or file storage) to Blob for XHR upload
   dataURItoBlob(dataURI, dataTYPE) {
     var binary = atob(dataURI.split(',')[1]), array = [];
     for (var i = 0; i < binary.length; i++) array.push(binary.charCodeAt(i));
