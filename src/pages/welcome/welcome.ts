@@ -34,6 +34,17 @@ export class WelcomePage {
     console.log("login email:" + this.email);
     console.log("login pwd:" + this.password);
 
+    if (this.email == null || this.password == null) {
+      let alert = this.alertCtrl.create({
+        title: 'Oops',
+        subTitle: 'Email or password cannot be empty!',
+        buttons: ['Dismiss']
+      });
+
+      alert.present();
+      return;
+    }
+
     let loader = this.loadingCtrl.create({
       content: 'Logging in...please wait...',
       duration: 3000
@@ -56,7 +67,7 @@ export class WelcomePage {
       .set('password', this.password);
 
     this.httpClient.get(this.api.url + '/user/login', {params}).subscribe(data => {
-          console.log('login result: ', data);
+        console.log('Login API returns: ', data);
 
           // set the login user profile with the user service
           let userProfile = data;
@@ -73,8 +84,8 @@ export class WelcomePage {
           loader.dismissAll();
 
           let alert = this.alertCtrl.create({
-            title: 'Log In Error',
-            subTitle: err['message'],
+            title: 'Oops',
+            subTitle: err['error']['message'],
             buttons: ['Dismiss']
           });
 
