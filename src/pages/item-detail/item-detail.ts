@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {IonicPage, LoadingController, ModalController, NavController, NavParams, ToastController} from 'ionic-angular';
+import {Component, ViewChild, ElementRef} from '@angular/core';
+import {IonicPage, LoadingController, ModalController, NavController, NavParams, ToastController, Platform} from 'ionic-angular';
 
 import {Items} from '../../providers/providers';
 import {HttpClient, HttpParams} from "@angular/common/http";
@@ -7,6 +7,8 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {format} from 'date-fns';
 import {User} from "../../providers/user/user";
 import {Api} from "../../providers/api/api";
+
+declare var google;
 
 @IonicPage({
   name: 'ItemDetailPage',
@@ -26,6 +28,8 @@ export class ItemDetailPage {
   alreadyJoin: boolean;
   btnJoinText: string;
   btnJoinAdhocText: string = "Join with Email";
+  @ViewChild('map') mapElement: ElementRef;
+  marker: any;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -35,19 +39,11 @@ export class ItemDetailPage {
               public http: HttpClient,
               public toastCtrl: ToastController,
               public user: User,
-              public api: Api) {
+              public api: Api,
+              private platform: Platform) {
 
     this.eventId = this.navParams.get('eventId');
     this.item = this.items.defaultItem;
-    // this.item = navParams.get('item') || items.defaultItem;
-
-    //item is null, redirect to list master
-    /*
-    if (this.item == items.defaultItem) {
-      console.log("item is null, navigating to item list page");
-      this.navCtrl.push(MainPage);
-    }
-    */
   }
 
   ionViewWillEnter() {
@@ -176,6 +172,28 @@ export class ItemDetailPage {
     else {
       this.presentToast('System error: event data not found!');
     }
+
+    this.platform.ready().then(() => {
+      let element = this.mapElement.nativeElement;
+      var map = new google.maps.Map(element,{
+        zoom: 13,
+        center: {lat: 22.3964, lng: 114.1095}
+      });
+
+      this.marker = new google.maps.Marker({
+        map: map,
+        draggable: true,
+        animation: google.maps.Animation.DROP,
+        position: {lat: 22.3964, lng: 114.1095}
+      });
+      this.marker.addListener('click', ()=>{
+        if (this.marker.getAnimation() !== null) {
+        this.marker.setAnimation(null);
+      } else {
+        this.marker.setAnimation(google.maps.Animation.BOUNCE);
+      }});
+
+    });
   }
 
   joinEventAdHoc() {

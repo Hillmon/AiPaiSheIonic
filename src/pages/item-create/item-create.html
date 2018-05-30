@@ -10,14 +10,6 @@
         <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
       </button>
     </ion-buttons>
-    <!--ion-buttons end>
-      <button ion-button (click)="done()" [disabled]="!isReadyToSave" strong>
-        <span color="primary" showWhen="ios">
-          {{ 'DONE_BUTTON' | translate }}
-        </span>
-        <ion-icon name="md-checkmark" showWhen="core,android,windows"></ion-icon>
-      </button>
-    </ion-buttons-->
   </ion-navbar>
 
 </ion-header>
@@ -95,14 +87,6 @@
       <ion-item *ngIf="!form.controls.eventFeeAmt.valid && form.controls.eventFeeAmt.dirty">
         <p>Event Fee cannot be empty!</p>
       </ion-item>
-      <!--<ion-item>-->
-      <!--<ion-label fixed>Paid Event</ion-label>-->
-      <!--<ion-toggle formControlName="paid"></ion-toggle>-->
-      <!--</ion-item>-->
-      <!--<ion-item>-->
-      <!--<ion-label>Description</ion-label>-->
-      <!--<ion-input type="text" placeholder="{{ 'EVENT_DESC_PLACEHOLDER' | translate }}" formControlName="desc"></ion-input>-->
-      <!--</ion-item>-->
     </ion-list>
     <div>
       <button ion-button block (click)="done()" [disabled]="!isReadyToSave">
