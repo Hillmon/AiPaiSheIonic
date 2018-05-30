@@ -38,7 +38,16 @@
     </ion-item>
   </ion-list>
 
-  <div #map style="height: 50%;"></div>
+  <div #map style="height: 50%;">
+    <div *ngIf="!mapIsReadyForEventVenue()" style="text-align: center;font-size: xx-large;">
+    <ion-icon name="alert" >
+    </ion-icon>
+      <br/>
+      Google map is not able to load.
+      <br/>
+      Please contact support.
+    </div>
+  </div>
   <ion-list>
     <button ion-button block (click)="joinEvent()" [disabled]="alreadyJoin" [hidden]="!isLoginUser">{{btnJoinText}}
     </button>

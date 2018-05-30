@@ -1,5 +1,13 @@
 import {Component, ViewChild, ElementRef} from '@angular/core';
-import {IonicPage, LoadingController, ModalController, NavController, NavParams, ToastController, Platform} from 'ionic-angular';
+import {
+  IonicPage,
+  LoadingController,
+  ModalController,
+  NavController,
+  NavParams,
+  ToastController,
+  Platform
+} from 'ionic-angular';
 
 import {Items} from '../../providers/providers';
 import {HttpClient, HttpParams} from "@angular/common/http";
@@ -30,6 +38,7 @@ export class ItemDetailPage {
   btnJoinAdhocText: string = "Join with Email";
   @ViewChild('map') mapElement: ElementRef;
   marker: any;
+  map: any;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -159,6 +168,38 @@ export class ItemDetailPage {
             this.eventDateStr = format(date, 'DD/MM/YYYY');
             this.eventTimeStr = format(date, 'hh:mm A');
 
+            this.platform.ready().then(() => {
+              let element = this.mapElement.nativeElement;
+
+
+              var address = this.item.eventVenue;
+              var geocoder = new google.maps.Geocoder();
+
+              geocoder.geocode({'address': address}, function (results, status) {
+                if (status == 'OK') {
+                  this.map = new google.maps.Map(element, {
+                    zoom: 13
+                  });
+
+                  this.map.setCenter(results[0].geometry.location);
+                  this.marker = new google.maps.Marker({
+                    map: this.map,
+                    position: results[0].geometry.location
+                  });
+                  this.marker.addListener('click', () => {
+                    if (this.marker.getAnimation() !== null) {
+                      this.marker.setAnimation(null);
+                    } else {
+                      this.marker.setAnimation(google.maps.Animation.BOUNCE);
+                    }
+                  });
+
+                } else {
+                  console.error('Geocode was not successful for the following reason: ' + status+'. Requested address '+address);
+                }
+              });
+
+            });
           }
         },
         err => {
@@ -172,29 +213,8 @@ export class ItemDetailPage {
     else {
       this.presentToast('System error: event data not found!');
     }
-
-    this.platform.ready().then(() => {
-      let element = this.mapElement.nativeElement;
-      var map = new google.maps.Map(element,{
-        zoom: 13,
-        center: {lat: 22.3964, lng: 114.1095}
-      });
-
-      this.marker = new google.maps.Marker({
-        map: map,
-        draggable: true,
-        animation: google.maps.Animation.DROP,
-        position: {lat: 22.3964, lng: 114.1095}
-      });
-      this.marker.addListener('click', ()=>{
-        if (this.marker.getAnimation() !== null) {
-        this.marker.setAnimation(null);
-      } else {
-        this.marker.setAnimation(google.maps.Animation.BOUNCE);
-      }});
-
-    });
   }
+
 
   joinEventAdHoc() {
     let joinEventAdhocModal = this.modalCtrl.create('JoinEventAdhocPage');
@@ -369,5 +389,9 @@ export class ItemDetailPage {
 
   isNotEmptyString(obj) {
     return obj != null && obj != "";
+  }
+
+  mapIsReadyForEventVenue(){
+    return typeof this.map !=="undefined";
   }
 }
