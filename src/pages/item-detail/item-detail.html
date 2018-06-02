@@ -22,7 +22,7 @@
       <p>Event Type: {{item.eventType}}</p>
       <p>Price: HKD {{item.eventFeeAmt}}</p>
       <p>Quota: {{item.eventQuota}}</p>
-      <p>Place(s) Remaining: {{item.remainingPlace}}</p>
+      <p *ngIf="(isEventOwner||isFewPlaceLeft)">Place(s) Remaining: {{item.remainingPlace}}</p>
     </ion-item>
   </ion-list>
 
@@ -40,8 +40,8 @@
 
   <div #map style="height: 50%;">
     <div *ngIf="!mapIsReadyForEventVenue()" style="text-align: center;font-size: xx-large;">
-    <ion-icon name="alert" >
-    </ion-icon>
+      <ion-icon name="alert" >
+      </ion-icon>
       <br/>
       Google map is not able to load.
       <br/>

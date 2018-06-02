@@ -1,12 +1,12 @@
-import {Component, ViewChild, ElementRef} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {
   IonicPage,
   LoadingController,
   ModalController,
   NavController,
   NavParams,
-  ToastController,
-  Platform
+  Platform,
+  ToastController
 } from 'ionic-angular';
 
 import {Items} from '../../providers/providers';
@@ -39,6 +39,8 @@ export class ItemDetailPage {
   @ViewChild('map') mapElement: ElementRef;
   marker: any;
   map: any;
+  isEventOwner: boolean = false;
+  isFewPlaceLeft: boolean = false;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -91,6 +93,12 @@ export class ItemDetailPage {
           console.log(data);
           if (data) {
             this.item['remainingPlace'] = data;
+
+            // check if only a few places are left
+            var threshold = 5;
+            if (this.item['remainingPlace'] < threshold) {
+              this.isFewPlaceLeft = true;
+            }
           }
         },
         err => {
@@ -140,6 +148,13 @@ export class ItemDetailPage {
 
             // retrieve the user name by the user ID
             if (this.item['ownerId']) {
+
+              // check if the login user is the owner
+              if (this.user.getLoginUser()) {
+                if (this.item['ownerId'] == this.user.getLoginUser()['id'])
+                  this.isEventOwner = true;
+              }
+
               const params = new HttpParams()
                 .set('id', this.item['ownerId']);
 
@@ -214,7 +229,6 @@ export class ItemDetailPage {
       this.presentToast('System error: event data not found!');
     }
   }
-
 
   joinEventAdHoc() {
     let joinEventAdhocModal = this.modalCtrl.create('JoinEventAdhocPage');
