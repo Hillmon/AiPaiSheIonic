@@ -52,10 +52,15 @@ export class ListMasterPage {
     this.currentItems = this.items.query();
 
     let userProfile = this.user.getLoginUser();
+
+    this.isLoginUser = userProfile ? true : false;
+
+    /*
     if (userProfile)
       this.isLoginUser = true;
     else
       this.isLoginUser = false;
+    */
   }
 
   /**
@@ -123,7 +128,7 @@ export class ListMasterPage {
 
     const formData = new FormData();
 
-    const imgBlob = this.dataURItoBlob(imgUri, "image/jpeg");
+    const imgBlob = ListMasterPage.dataURItoBlob(imgUri, "image/jpeg");
 
     console.log(imgBlob);
 
@@ -197,19 +202,6 @@ export class ListMasterPage {
   }
 
   wechatShare(item: Item){
-
-    /*
-    // Testing code for WeChat Login
-    var scope = "snsapi_userinfo",
-      state = "_" + (+new Date());
-    window.Wechat.auth(scope, state, function (response) {
-      // you may use response.code to get the access token.
-      alert(JSON.stringify(response));
-    }, function (reason) {
-      alert("Failed: " + reason);
-    });
-    */
-
     window.Wechat.isInstalled(function (installed) {
       if (!installed) {
         alert("Wechat not installed");
@@ -242,7 +234,7 @@ export class ListMasterPage {
   }
 
   // convert base64 data URI (from camera or file storage) to Blob for XHR upload
-  dataURItoBlob(dataURI, dataTYPE) {
+  static dataURItoBlob(dataURI, dataTYPE) {
     var binary = atob(dataURI.split(',')[1]), array = [];
     for (var i = 0; i < binary.length; i++) array.push(binary.charCodeAt(i));
     return new Blob([new Uint8Array(array)], {type: dataTYPE});

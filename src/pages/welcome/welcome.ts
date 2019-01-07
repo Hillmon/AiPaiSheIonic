@@ -6,6 +6,8 @@ import {MainPage} from '../pages';
 import {User} from '../../providers/providers';
 import {Api} from "../../providers/api/api";
 
+declare var window;
+
 /**
  * The Welcome Page is a splash page that quickly describes the app,
  * and then directs the user to create an account or log in.
@@ -70,8 +72,8 @@ export class WelcomePage {
         console.log('Login API returns: ', data);
 
           // set the login user profile with the user service
-          let userProfile = data;
-          this.user.setLoginUser(userProfile);
+          // let userProfile = data;
+          this.user.setLoginUser(data);
 
         loader.dismissAll();
           this.navCtrl.push(MainPage);
@@ -95,7 +97,7 @@ export class WelcomePage {
         });
   }
 
-  signup() {
+  signUp() {
     // direct to the page for signup
     this.navCtrl.push('SignupPage');
   }
@@ -103,5 +105,17 @@ export class WelcomePage {
   welcomeGuest() {
     // direct to the list master page
     this.navCtrl.push('ListMasterPage');
+  }
+
+  loginWeChat() {
+       // Testing code for WeChat Login
+       var scope = "snsapi_userinfo",
+         state = "_" + (+new Date());
+       window.Wechat.auth(scope, state, function (response) {
+         // you may use response.code to get the access token.
+         alert(JSON.stringify(response));
+       }, function (reason) {
+         alert("Failed: " + reason);
+       });
   }
 }
