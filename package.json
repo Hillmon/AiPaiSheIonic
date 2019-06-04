@@ -12,52 +12,48 @@
     "ionic:serve": "ionic-app-scripts serve"
   },
   "dependencies": {
-    "@angular/common": "^5.2.11",
-    "@angular/compiler": "^5.2.11",
-    "@angular/compiler-cli": "^5.2.11",
-    "@angular/core": "^5.2.11",
-    "@angular/forms": "^5.2.11",
-    "@angular/http": "^5.2.11",
-    "@angular/platform-browser": "^5.2.11",
-    "@angular/platform-browser-dynamic": "^5.2.11",
-    "@ionic-native/camera": "^4.19.0",
-    "@ionic-native/core": "^4.19.0",
-    "@ionic-native/file": "^4.19.0",
-    "@ionic-native/file-transfer": "^4.19.0",
-    "@ionic-native/http": "^4.19.0",
-    "@ionic-native/social-sharing": "^4.19.0",
-    "@ionic-native/splash-screen": "^4.19.0",
-    "@ionic-native/status-bar": "^4.19.0",
+    "@angular/common": "^7.2.15",
+    "@angular/compiler": "^7.2.15",
+    "@angular/compiler-cli": "^7.2.15",
+    "@angular/core": "^7.2.15",
+    "@angular/forms": "^7.2.15",
+    "@angular/http": "^7.2.15",
+    "@angular/platform-browser": "^7.2.15",
+    "@angular/platform-browser-dynamic": "^7.2.15",
+    "@ionic-native/camera": "^5.7.0",
+    "@ionic-native/core": "^5.7.0",
+    "@ionic-native/file": "^5.7.0",
+    "@ionic-native/file-transfer": "^5.7.0",
+    "@ionic-native/http": "^5.7.0",
+    "@ionic-native/social-sharing": "^5.7.0",
+    "@ionic-native/splash-screen": "^5.7.0",
+    "@ionic-native/status-bar": "^5.7.0",
     "@ionic/storage": "^2.2.0",
-    "@ngx-translate/core": "^9.1.1",
-    "@ngx-translate/http-loader": "^2.0.1",
-    "cordova-android": "^7.1.4",
-    "cordova-browser": "^5.0.4",
-    "cordova-ios": "^4.5.5",
-    "cordova-plugin-advanced-http": "^2.0.2",
+    "@ngx-translate/core": "^11.0.1",
+    "@ngx-translate/http-loader": "^4.0.0",
+    "cordova-ios": "^5.0.1",
+    "cordova-plugin-advanced-http": "^2.0.9",
     "cordova-plugin-camera": "^4.0.3",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-file": "^6.0.1",
-    "cordova-plugin-ionic-webview": "^3.0.0",
+    "cordova-plugin-ionic-webview": "^4.0.1",
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-statusbar": "^2.4.2",
-    "cordova-plugin-wechat": "^2.6.0",
     "cordova-plugin-whitelist": "^1.3.3",
     "cordova-plugin-x-socialsharing": "^5.4.4",
-    "cordova-sqlite-storage": "^2.6.0",
     "date-fns": "^1.30.1",
     "es6-promise-plugin": "^4.2.2",
     "file": "^0.2.2",
-    "ionic-angular": "^3.9.2",
+    "ionic-angular": "^3.9.6",
     "ionic-plugin-keyboard": "^2.2.1",
-    "ionicons": "^4.5.1",
-    "rxjs": "^5.5.11",
+    "ionicons": "^4.5.8",
+    "rxjs": "^6.5.2",
     "sw-toolbox": "3.6.0",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "^3.2.1",
-    "typescript": "^2.5.2"
+    "@ionic/app-scripts": "^3.2.4",
+    "typescript": "^3.2.2"
   },
   "description": "Ionic mobile APP project for APS",
   "cordova": {
@@ -72,16 +68,10 @@
       "cordova-plugin-file": {},
       "cordova-plugin-statusbar": {},
       "cordova-plugin-x-socialsharing": {},
-      "cordova-sqlite-storage": {},
-      "es6-promise-plugin": {},
-      "cordova-plugin-wechat": {
-        "WECHATAPPID": "wxb6c7b7311e231c0e"
-      }
+      "es6-promise-plugin": {}
     },
     "platforms": [
-      "browser",
-      "ios",
-      "android"
+      "ios"
     ]
   }
 }

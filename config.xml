@@ -30,12 +30,5 @@
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.4.1" />
-    <plugin name="cordova-sqlite-storage" spec="^2.5.0" />
     <plugin name="es6-promise-plugin" spec="^4.2.2" />
-    <engine name="browser" spec="^5.0.4" />
-    <engine name="ios" spec="^4.5.5" />
-    <engine name="android" spec="^7.1.4" />
-    <plugin name="cordova-plugin-wechat" spec="^2.6.0">
-        <variable name="WECHATAPPID" value="wxb6c7b7311e231c0e" />
-    </plugin>
 </widget>
